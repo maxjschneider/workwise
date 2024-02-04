@@ -3,7 +3,7 @@ import cors from "cors";
 import "./loadEnvironment.mjs";
 import users from "./routes/user.mjs";
 
-const PORT = 5050;
+const PORT = 5000;
 const app = express();
 
 app.use(cors());
