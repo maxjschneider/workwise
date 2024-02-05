@@ -10,17 +10,28 @@ Our primary focus is on employee scheduling. Businesses desire an intuitive and 
 
 Beyond just scheduling, WorkWise will also be designed to handle taxes, employee files, shift approvals, time-off requests, and much more. 
 
-## How To Run
-Start server:
+## Initial Setup 
+Install Server Packages:
 ```
 cd mern/server
 npm install
-npm start
 ```
 
-Start Web server
+Install Client Packages:
 ```
 cd mern/client
 npm install
+```
+
+## How To Run
+Start Server:
+```
+cd mern/server
+node server.mjs
+```
+
+Start Frontend:
+```
+cd mern/client
 npm start
 ```
