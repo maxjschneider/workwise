@@ -11,11 +11,22 @@ router.get("/", async (req, res) => {
   res.send(results).status(200);
 });
 
+
+// Gets all schedule entries for a certain user
+router.get("/user/:id", async (req, res) => {
+    let collection = await db.collection("schedule");
+    let query = {user_id: new ObjectId(req.params.id)};
+    let result = await collection.find(query);
+ 
+    if (!result) res.send("Not found").status(404);
+    else res.send(result).status(200);
+  });
+
 // Gets all schedule entries for a certain day
 router.get("/day/:day", async (req, res) => {
   let collection = await db.collection("schedule");
-  let query = {day : req.params.day};
-  let result = await collection.find(query);
+  let query = {"day" : req.params.day};
+  let result = await collection.find(query).toArray();
 
   if (!result) res.send("Not found").status(404);
   else res.send(result).status(200);
