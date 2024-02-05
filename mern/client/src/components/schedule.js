@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react"
 import "bootstrap/dist/css/bootstrap.css";
 
+const getTime = (dateString) => {
+    return new Date(dateString).toLocaleTimeString("en-US", { hour:"numeric", minute:"2-digit", timeZone:"UTC" });
+}
+
 const ScheduleColumn = (props) => (
     <td>
         <table>
             <tbody>
-                {props.entry.map((entry) => <tr key={entry.name}><td>{entry.name}<br/>{entry.position}<br/>{entry.start}<br/>{entry.end}</td></tr>)}
+                {props.entry.map((entry) => <tr key={entry.name}><td><h6 style={{fontSize:15}}>{entry.name} (<i>{entry.position}</i>)</h6>{getTime(entry.start)} - {getTime(entry.end)}</td></tr>)}
             </tbody>
         </table>
     </td>
@@ -62,7 +66,6 @@ export default function Schedule() {
             return (
                 <ScheduleColumn 
                     key={entry.name} 
-
                     entry={entry}
                 />
             )
@@ -74,13 +77,13 @@ export default function Schedule() {
             <table className="table table-striped" style={{ marginTop: 20 }}>
                 <thead>
                     <tr>
-                        <th>Sunday</th>
-                        <th>Monday</th>
-                        <th>Tuesday</th>
-                        <th>Wednesday</th>
-                        <th>Thursday</th>
-                        <th>Friday</th>
-                        <th>Saturday</th>
+                        <th scope="col" class="col-1">Sunday</th>
+                        <th scope="col" class="col-1">Monday</th>
+                        <th scope="col" class="col-1">Tuesday</th>
+                        <th scope="col" class="col-1">Wednesday</th>
+                        <th scope="col" class="col-1">Thursday</th>
+                        <th scope="col" class="col-1">Friday</th>
+                        <th scope="col" class="col-1">Saturday</th>
                     </tr>
                 </thead>
 
