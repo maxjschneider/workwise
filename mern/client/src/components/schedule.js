@@ -4,7 +4,9 @@ import "bootstrap/dist/css/bootstrap.css";
 const ScheduleColumn = (props) => (
     <td>
         <table>
-            {props.entry.map((entry) => <tr><td>{entry.name} <br/> {entry.position} <br/> {entry.start} <br/> {entry.end} </td></tr>)}
+            <tbody>
+                {props.entry.map((entry) => <tr key={entry.name}><td>{entry.name}<br/>{entry.position}<br/>{entry.start}<br/>{entry.end}</td></tr>)}
+            </tbody>
         </table>
     </td>
 )
@@ -59,6 +61,8 @@ export default function Schedule() {
         return schedule.map((entry) => {
             return (
                 <ScheduleColumn 
+                    key={entry.name} 
+
                     entry={entry}
                 />
             )
