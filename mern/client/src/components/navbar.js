@@ -10,14 +10,14 @@ export default function SiteNav() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <LinkContainer to="/foo/bar">
+        <LinkContainer to="/">
           <Navbar.Brand>
             <img alt="WorkWise" className="d-inline-block align-top" width="100"  src={logo}></img>
           </Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          <Nav className="ml-auto">
             <LinkContainer to="/schedule">
               <Nav.Link>Schedule</Nav.Link>
               

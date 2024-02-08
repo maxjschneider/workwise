@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import "bootstrap/dist/css/bootstrap.css";
 
 const getTime = (dateString) => {
@@ -18,50 +18,45 @@ const ScheduleColumn = (props) => (
 export default function Schedule() {
     const [schedule, setSchedule] = useState([]);
 
-    useEffect(() => {
-        var responses = [];
+    async function getSchedule() {
+        var responses = []
+        const HOSTNAME = "http://localhost:5000"
 
-        async function getSchedule() {
-            const HOSTNAME = "http://localhost:5000"
+        var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-            var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        for (let [i, day] of days.entries()) {
+            const response = await fetch(HOSTNAME + "/schedule/day/" + day);
 
-            for (let [i, day] of days.entries()) {
-                const response = await fetch(HOSTNAME + "/schedule/day/" + day);
+            if (!response.ok) {
+                const message = `An error occurred: ${response.statusText}`;
+                window.alert(message);
+                return;
+            }
 
-                if (!response.ok) {
-                    const message = `An error occurred: ${response.statusText}`;
+            responses[i] = await response.json();
+
+            if (responses[i][0] != null) {
+                const get_user_response = await fetch(HOSTNAME + "/users/" + responses[i][0].user_id);
+
+                if (!get_user_response.ok) {
+                    const message = `An error occurred: ${get_user_response.statusText}`;
                     window.alert(message);
                     return;
                 }
 
-                responses[i] = await response.json();
+                const user = await get_user_response.json();
 
-                if (responses[i][0] != null) {
-                    const get_user_response = await fetch(HOSTNAME + "/users/" + responses[i][0].user_id);
-
-                    if (!get_user_response.ok) {
-                        const message = `An error occurred: ${get_user_response.statusText}`;
-                        window.alert(message);
-                        return;
-                    }
-
-                    const user = await get_user_response.json();
-
-                    responses[i][0].name = user.name;
-                    responses[i][0].position = user.position;
-                }
+                responses[i][0].name = user.name;
+                responses[i][0].position = user.position;
             }
-            
-            setSchedule(responses);
         }
-
-        getSchedule();
-
-        return;
-    }, [schedule.length]);
+        
+        setSchedule(responses);
+    }
 
     function mapSchedule() {
+        getSchedule();
+
         return schedule.map((entry) => {
             return (
                 <ScheduleColumn 

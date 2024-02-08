@@ -12,7 +12,7 @@ const App = () => {
       <SiteNav />
       <div style={{ margin: 20 }}></div>
       <Routes>
-        <Route exact path="/" element={<Schedule />} />      </Routes>
+        <Route exact path="/schedule" element={<Schedule />} />      </Routes>
     </div>
   );
 }
