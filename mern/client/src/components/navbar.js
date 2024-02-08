@@ -1,37 +1,30 @@
 import React from "react"
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 import logo from "../images/transparent_logo.png"
 
-import { NavLink } from "react-router-dom"
+import { LinkContainer } from 'react-router-bootstrap'
 
-export default function Navbar() {
-    return (
-        <div>
-          <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <NavLink className="navbar-brand" to="/">
-               <img alt="MongoDB logo" style={{"width" : 25 + '%'}} src={"logo"}></img>
-            </NavLink>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-     
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/create">
-                    Create Record
-                  </NavLink>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </div>
-    );
+export default function SiteNav() {
+  return (
+    <Navbar expand="lg" className="bg-body-tertiary">
+      <Container>
+        <LinkContainer to="/foo/bar">
+          <Navbar.Brand>
+            <img alt="WorkWise" className="d-inline-block align-top" width="100"  src={logo}></img>
+          </Navbar.Brand>
+        </LinkContainer>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <LinkContainer to="/schedule">
+              <Nav.Link>Schedule</Nav.Link>
+              
+            </LinkContainer>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
 }

@@ -77,13 +77,13 @@ export default function Schedule() {
             <table className="table table-striped" style={{ marginTop: 20 }}>
                 <thead>
                     <tr>
-                        <th scope="col" class="col-1">Sunday</th>
-                        <th scope="col" class="col-1">Monday</th>
-                        <th scope="col" class="col-1">Tuesday</th>
-                        <th scope="col" class="col-1">Wednesday</th>
-                        <th scope="col" class="col-1">Thursday</th>
-                        <th scope="col" class="col-1">Friday</th>
-                        <th scope="col" class="col-1">Saturday</th>
+                        <th scope="col" className="col-1">Sunday</th>
+                        <th scope="col" className="col-1">Monday</th>
+                        <th scope="col" className="col-1">Tuesday</th>
+                        <th scope="col" className="col-1">Wednesday</th>
+                        <th scope="col" className="col-1">Thursday</th>
+                        <th scope="col" className="col-1">Friday</th>
+                        <th scope="col" className="col-1">Saturday</th>
                     </tr>
                 </thead>
 
