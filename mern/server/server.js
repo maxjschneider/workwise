@@ -22,13 +22,14 @@ const SESS_LIFETIME = process.env.SESS_LIFETIME;
     console.log('MongoDB Atlas connected');    
 
     const app = express();
+    
     app.use(cors());
+    app.use(express.urlencoded({ extended: true }));
+    app.use(express.json());   
 
     const MongoStore = connectStore(session);
 
     app.disable('x-powered-by');
-    app.use(express.urlencoded({ extended: true }));
-    app.use(express.json());   
 
     app.use(session({
       name: SESS_NAME,

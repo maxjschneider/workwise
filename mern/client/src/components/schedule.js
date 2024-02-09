@@ -16,9 +16,10 @@ const ScheduleColumn = (props) => (
 )
 
 export default function Schedule() {
+    const HOSTNAME = "http://localhost:5000"
+
     async function getSchedule() {
         var responses = []
-        const HOSTNAME = "http://localhost:5000"
 
         var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
@@ -34,8 +35,6 @@ export default function Schedule() {
             }
             
             responses[i] = await response.json();
-
-            console.log(responses[i]);
 
             if (responses[i][0] != null) {
                 const get_user_response = await fetch(HOSTNAME + "/api/users/" + responses[i][0].user_id);
@@ -67,6 +66,23 @@ export default function Schedule() {
         });
     }
 
+    async function insertEntry() {
+        await fetch(HOSTNAME + "/api/schedule/", {
+            method: "POST", 
+            body: JSON.stringify({
+                user_id: "65c00cd36f2337b1c2302aea", 
+                day: "Tueday",
+                start: new Date("1970-01-01T08:30:00.000+00:00"), 
+                end: new Date("1970-01-01T12:30:00.000+00:00"),
+                enabled: true
+            }),
+            headers: {
+                "Access-Control-Allow-Origin": true,
+                "Content-Type": "application/json"
+            }
+        });
+    }
+
     return (
         <div>
             <table className="table table-striped" style={{ marginTop: 20 }}>
@@ -88,6 +104,8 @@ export default function Schedule() {
                     </tr>
                 </tbody>
             </table>
+
+            <button onClick={insertEntry}>Insert an Entry!</button>
         </div>
     )
 }

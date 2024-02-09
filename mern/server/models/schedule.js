@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
 
-// THIS IS PROBABLY BROKEN BECAUSE YOURE TRYING TO ACCESS PRE  EXISTING RECORDS, TRY INSERTING THEM WITH THIS SCHEMA!!!
-
 const ScheduleEntrySchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
@@ -25,5 +23,5 @@ const ScheduleEntrySchema = new mongoose.Schema({
   }
 });
 
-const ScheduleEntry = mongoose.model('schedule', ScheduleEntrySchema, "schedule");
+const ScheduleEntry = mongoose.model("schedule", ScheduleEntrySchema, "schedule");
 export default ScheduleEntry;
