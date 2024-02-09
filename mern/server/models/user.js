@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
-import { compareSync, hashSync } from 'bcryptjs';
+import { Int32 } from 'mongodb';
+
+import pkg from 'bcryptjs';
+const { compareSync, hashSync } = pkg;
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -8,6 +11,14 @@ const UserSchema = new mongoose.Schema({
       validator: username => User.doesNotExist({ username }),
       message: "Username already exists"
     }
+  },
+  position: {
+    type: String,
+    required: true
+  },
+  level: {
+    type: Number,
+    required: true
   },
   email: {
     type: String,

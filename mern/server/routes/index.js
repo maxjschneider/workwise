@@ -1,3 +1,5 @@
-import userRoutes from "../models/user";
+import userRouter from "./user.js";
+import scheduleRouter from "./schedule.js";
+import sessionRouter from './session.js';
 
-export { userRoutes };
+export { userRouter, scheduleRouter, sessionRouter };
