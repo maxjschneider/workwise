@@ -24,11 +24,11 @@ userRouter.post("", async (req, res) => {
 });
 
 userRouter.get("/:id", async (req, res) => {
-    const { id } = req.body;
-    const user = await User.findOne({ _id: mongoose.Types.ObjectId(id) });
+    const id = req.params.id;
+    const user = await User.findOne({ _id: new mongoose.Types.ObjectId(id) });
 
     if (!user) {
-        res.send("Not found").status(404);
+        res.send(JSON.stringify("Not found")).status(404);
     } else {
         res.send(user).status(200);
     }

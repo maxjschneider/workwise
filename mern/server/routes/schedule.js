@@ -20,9 +20,6 @@ scheduleRouter.get("/day/:day", async (req, res) => {
     const targetDay = req.params.day;
     const result = await ScheduleEntry.find({ day: targetDay });
 
-    console.log(targetDay);
-    console.log(result);
-
     res.send(result).status(200);
 });
 

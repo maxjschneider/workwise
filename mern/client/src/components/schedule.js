@@ -41,19 +41,16 @@ export default function Schedule() {
             responses[i] = await response.json();
 
             if (responses[i][0] != null) {
-                console.log(responses[i][0].user_id);
-                console.log(day);
-                console.log();
-                const get_user_response = await fetch(HOSTNAME + "/api/users/" + responses[i][0].user_id);
+                const userResponse = await fetch(HOSTNAME + "/api/users/" + responses[i][0].user_id);
 
-                if (!get_user_response.ok) {
-                    const message = `An error occurred: ${get_user_response.statusText}`;
+                if (!userResponse.ok) {
+                    const message = `An error occurred: ${userResponse.statusText}`;
                     window.alert(message);
                     return;
                 }
 
-                const user = await get_user_response.json();
-                
+                const user = await userResponse.json();
+
                 responses[i][0].name = user.name;
                 responses[i][0].position = user.position;
             }
@@ -96,8 +93,9 @@ export default function Schedule() {
         </div>
     )
 
+
+    // useful for later
     /*
-    
     async function insertEntry() {
         const res = await fetch(HOSTNAME + "/api/schedule/", {
             method: "POST", 
