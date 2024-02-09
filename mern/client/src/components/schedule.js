@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import "bootstrap/dist/css/bootstrap.css";
 
 const getTime = (dateString) => {
@@ -9,18 +9,22 @@ const ScheduleColumn = (props) => (
     <td>
         <table>
             <tbody>
-                {props.entry.map((entry) => <tr key={entry.name}><td><h6 style={{fontSize:15}}>{entry.name} (<i>{entry.position}</i>)</h6>{getTime(entry.start)} - {getTime(entry.end)}</td></tr>)}
+                {props.entry.map((entry, i) => <tr key={i}><td><h6 style={{fontSize:15}}>{entry.name} (<i>{entry.position}</i>)</h6>{getTime(entry.start)} - {getTime(entry.end)}</td></tr>)}
             </tbody>
         </table>
     </td>
 )
 
 export default function Schedule() {
+    const [schedule, setSchedule] = useState([]);
     const HOSTNAME = "http://localhost:5000"
 
-    async function getSchedule() {
-        var responses = []
+    useEffect(() => {
+        fetchData();
+    }, []);
 
+    async function fetchData() {
+        var responses = [];
         var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
         for (let [i, day] of days.entries()) {
@@ -37,6 +41,9 @@ export default function Schedule() {
             responses[i] = await response.json();
 
             if (responses[i][0] != null) {
+                console.log(responses[i][0].user_id);
+                console.log(day);
+                console.log();
                 const get_user_response = await fetch(HOSTNAME + "/api/users/" + responses[i][0].user_id);
 
                 if (!get_user_response.ok) {
@@ -51,37 +58,10 @@ export default function Schedule() {
                 responses[i][0].position = user.position;
             }
         }
-        
-        return responses;
+
+        setSchedule(responses);
     }
 
-    function mapSchedule() {
-        return Array.from(getSchedule()).map((entry) => {
-            return (
-                <ScheduleColumn 
-                    key={entry.name} 
-                    entry={entry}
-                />
-            )
-        });
-    }
-
-    async function insertEntry() {
-        await fetch(HOSTNAME + "/api/schedule/", {
-            method: "POST", 
-            body: JSON.stringify({
-                user_id: "65c00cd36f2337b1c2302aea", 
-                day: "Tueday",
-                start: new Date("1970-01-01T08:30:00.000+00:00"), 
-                end: new Date("1970-01-01T12:30:00.000+00:00"),
-                enabled: true
-            }),
-            headers: {
-                "Access-Control-Allow-Origin": true,
-                "Content-Type": "application/json"
-            }
-        });
-    }
 
     return (
         <div>
@@ -100,12 +80,41 @@ export default function Schedule() {
 
                 <tbody>
                     <tr>
-                        {mapSchedule()}
+                        { 
+                            schedule.map((entry) => {
+                                return (
+                                    <ScheduleColumn 
+                                        key={entry.name} 
+                                        entry={entry}
+                                    />
+                                )
+                            })
+                        }
                     </tr>
                 </tbody>
             </table>
-
-            <button onClick={insertEntry}>Insert an Entry!</button>
         </div>
     )
+
+    /*
+    
+    async function insertEntry() {
+        const res = await fetch(HOSTNAME + "/api/schedule/", {
+            method: "POST", 
+            body: JSON.stringify({
+                user_id: "65c00cd36f2337b1c2302aea", 
+                day: "Tueday",
+                start: new Date("1970-01-01T08:30:00.000+00:00"), 
+                end: new Date("1970-01-01T12:30:00.000+00:00"),
+                enabled: true
+            }),
+            headers: {
+                "Access-Control-Allow-Origin": true,
+                "Content-Type": "application/json"
+            }
+        });
+
+        const resp = await res.json();
+        console.log(resp);
+    }*/
 }

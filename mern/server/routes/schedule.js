@@ -7,8 +7,8 @@ scheduleRouter.post("", async (req, res) => {
     try {
         const { user_id, day, start, end, enabled } = req.body;
 
-        const entry = new ScheduleEntry({ user_id, day, start, end, enabled });
-        await entry.save();
+        var entry = new ScheduleEntry({ user_id, day, start, end, enabled });
+        entry.save();
 
         res.send(entry);
     } catch (err) {
@@ -18,7 +18,10 @@ scheduleRouter.post("", async (req, res) => {
 
 scheduleRouter.get("/day/:day", async (req, res) => {
     const targetDay = req.params.day;
-    const result = await ScheduleEntry.find();
+    const result = await ScheduleEntry.find({ day: targetDay });
+
+    console.log(targetDay);
+    console.log(result);
 
     res.send(result).status(200);
 });

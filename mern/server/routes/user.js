@@ -1,5 +1,6 @@
 import Joi from 'joi';
 import express from 'express';
+import mongoose from 'mongoose';
 import User from '../models/user.js';
 import { signUp } from '../validations/user.js';
 import { parseError, sessionizeUser } from "../util/helpers.js";
@@ -24,7 +25,7 @@ userRouter.post("", async (req, res) => {
 
 userRouter.get("/:id", async (req, res) => {
     const { id } = req.body;
-    const user = await User.findOne({ id });
+    const user = await User.findOne({ _id: mongoose.Types.ObjectId(id) });
 
     if (!user) {
         res.send("Not found").status(404);
