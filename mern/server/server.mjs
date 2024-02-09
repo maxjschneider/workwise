@@ -1,19 +1,26 @@
-import express from "express";
-import cors from "cors";
-import "./loadEnvironment.mjs";
-import users from "./routes/users.mjs";
-import schedule from "./routes/schedule.mjs";
+import express from 'express';
+import mongoose from 'mongoose';
+import { userRoutes } from './routes/index';
 
-const PORT = 5000;
-const app = express();
+const ATLAS_URI = process.env.ATLAS_URI;
+const PORT = process.env.PORT;
 
-app.use(cors());
-app.use(express.json());
+(async () => {
+  try {
+    await mongoose.connect(MONGO_URI, { useNewUrlParser: true });
+    console.log('MongoDB Atlas connected');    
 
-app.use("/users", users);
-app.use("/schedule", schedule);
+    const app = express();
+    app.disable('x-powered-by');
+    app.use(express.urlencoded({ extended: true }));
+    app.use(express.json());   
 
-// start the Express server
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
+    const apiRouter = express.Router();
+    app.use('/api', apiRouter);
+    apiRouter.use('/users', userRoutes);    
+
+    app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+  } catch (err) {
+    console.log(err)
+  }
+})();

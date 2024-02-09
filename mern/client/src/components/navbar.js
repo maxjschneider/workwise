@@ -20,7 +20,6 @@ export default function SiteNav() {
           <Nav className="ml-auto">
             <LinkContainer to="/schedule">
               <Nav.Link>Schedule</Nav.Link>
-              
             </LinkContainer>
           </Nav>
         </Navbar.Collapse>
