@@ -17,7 +17,6 @@ const ScheduleColumn = (props) => (
 
 export default function Schedule() {
     const [schedule, setSchedule] = useState([]);
-    const HOSTNAME = "http://localhost:5000"
 
     useEffect(() => {
         fetchData();
@@ -28,7 +27,8 @@ export default function Schedule() {
         var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
         for (let [i, day] of days.entries()) {
-            const response = await fetch(HOSTNAME + "/api/schedule/day/" + day, 
+
+            const response = await fetch(process.env.REACT_APP_HOSTNAME + "/api/schedule/day/" + day, 
                 {headers: {"Access-Control-Allow-Origin": true}}
             );
 
@@ -41,7 +41,7 @@ export default function Schedule() {
             responses[i] = await response.json();
 
             if (responses[i][0] != null) {
-                const userResponse = await fetch(HOSTNAME + "/api/users/" + responses[i][0].user_id);
+                const userResponse = await fetch(process.env.REACT_APP_HOSTNAME + "/api/users/" + responses[i][0].user_id);
 
                 if (!userResponse.ok) {
                     const message = `An error occurred: ${userResponse.statusText}`;
