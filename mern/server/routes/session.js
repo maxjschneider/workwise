@@ -11,26 +11,32 @@ sessionRouter.post("", async (req, res) => {
     try {
       const schema = Joi.object({
         username: Joi.string()
-            .alphanum()
-            .min(3)
-            .max(30)
+            .pattern(new RegExp('^[a-zA-Z ]{3,30}$'))
             .required(),
       
         password: Joi.string()
-            .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
+            .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
+            .required(),
       
         email: Joi.string()
             .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'org', 'edu'] } })
-      }).with('password', 'email');
+            .required()
+      })
+  
+      await schema.validateAsync(
+      {
+        password: req.body.password, 
+        email: req.body.email 
+      });    
 
-      const { email, password } = req.body;
-      await schema.validateAsync({ email, password });    
-
-      const user = await User.findOne({ email });
-      if (user && user.comparePasswords(password)) {
+      const user = await User.findOne({ email: req.body.email });
+      
+      if (user && user.comparePasswords(req.body.password)) {
         const sessionUser = sessionizeUser(user);    
 
-        req.session.user = sessionUser
+        req.session.user = sessionUser;
+        req.session.save();
+
         res.send(sessionUser);
       } else {
         throw new Error('Invalid login credentials');
@@ -61,8 +67,10 @@ sessionRouter.delete("", ({ session }, res) => {
     }
 });
 
-sessionRouter.get("", ({ session: { user }}, res) => {
-    res.send({ user });
+sessionRouter.get("", (req, res) => {
+    console.log(req.session.user);
+    
+    res.send({ user: req.session.user });
 });
   
 export default sessionRouter;

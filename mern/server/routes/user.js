@@ -23,16 +23,19 @@ userRouter.post("", async (req, res) => {
     })
 
     await schema.validateAsync(
-      { username: req.body.username, 
-        password: req.body.password, 
-        email: req.body.email 
-      });    
+    { 
+      username: req.body.username, 
+      password: req.body.password, 
+      email: req.body.email 
+    });    
     
     const newUser = new User(req.body);
     const sessionUser = sessionizeUser(newUser);
     await newUser.save();
 
     req.session.user = sessionUser;
+    req.session.save();
+
     res.send(sessionUser);
   } catch (err) {
     res.status(400).send(parseError(err));
