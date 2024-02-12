@@ -22,6 +22,11 @@ export default function SiteNav() {
               <Nav.Link>Schedule</Nav.Link>
             </LinkContainer>
           </Nav>
+          <Nav className="ms-auto">
+            <LinkContainer to="/register">
+              <Nav.Link>Register</Nav.Link>
+            </LinkContainer>
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>

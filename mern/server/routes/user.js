@@ -1,18 +1,34 @@
-import Joi from 'joi';
 import express from 'express';
 import mongoose from 'mongoose';
 import User from '../models/user.js';
-import { signUp } from '../validations/user.js';
+import Joi from "joi";
 import { parseError, sessionizeUser } from "../util/helpers.js";
 
 const userRouter = express.Router();
 
 userRouter.post("", async (req, res) => {
   try {
-    const { username, email, password } = req.body
-    await Joi.validate({ username, email, password }, signUp);    
+    const schema = Joi.object({
+      username: Joi.string()
+          .pattern(new RegExp('^[a-zA-Z ]{3,30}$'))
+          .required(),
     
-    const newUser = new User({ username, email, password });
+      password: Joi.string()
+          .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
+          .required(),
+    
+      email: Joi.string()
+          .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'org', 'edu'] } })
+          .required()
+    })
+
+    await schema.validateAsync(
+      { username: req.body.username, 
+        password: req.body.password, 
+        email: req.body.email 
+      });    
+    
+    const newUser = new User(req.body);
     const sessionUser = sessionizeUser(newUser);
     await newUser.save();
 

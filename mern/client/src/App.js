@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom"
 // import components here
 import SiteNav from './components/navbar';
 import Schedule from './components/schedule';
+import Register from './components/register';
 
 const App = () => {
   return (
@@ -12,7 +13,9 @@ const App = () => {
       <SiteNav />
       <div style={{ margin: 20 }}></div>
       <Routes>
-        <Route exact path="/schedule" element={<Schedule />} />      </Routes>
+        <Route exact path="/schedule" element={<Schedule />} />    
+        <Route exact path="/register" element={<Register />} />     
+      </Routes>
     </div>
   );
 }

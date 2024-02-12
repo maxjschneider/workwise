@@ -1,24 +1,32 @@
 import React from 'react';
 import { createRoot } from "react-dom/client"
 import { BrowserRouter } from "react-router-dom"
+import App from "./App"
+
 import setupStore from "./store/store";
 import { Provider } from "react-redux";
 
-import App from "./App"
+import { checkLoggedIn } from './util/session';
 
-const store = setupStore();
 
-const container = document.getElementById("root");
-const root = createRoot(container);
+const renderApp = preloadedState => {
+  const storeState = setupStore(preloadedState);
 
-root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <App /> 
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>
-);
+  const container = document.getElementById("root");
+  const root = createRoot(container);
 
-window.getState = store.getState;
+  root.render(
+    <React.StrictMode>
+      <BrowserRouter>
+        <Provider store={storeState}>
+          <App /> 
+        </Provider>
+      </BrowserRouter>
+    </React.StrictMode>
+  );
+
+  window.getState = storeState.getState;
+}
+
+
+(async () => renderApp(await checkLoggedIn()))();

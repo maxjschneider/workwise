@@ -1,7 +1,6 @@
 import express from "express";
 import Joi from "joi";
 import User from "../models/user.js";
-import { signIn } from "../validations/user.js";
 import { parseError, sessionizeUser } from "../util/helpers.js";
 
 const SESS_NAME = process.env.SESS_NAME;
@@ -10,8 +9,22 @@ const sessionRouter = express.Router();
 
 sessionRouter.post("", async (req, res) => {
     try {
+      const schema = Joi.object({
+        username: Joi.string()
+            .alphanum()
+            .min(3)
+            .max(30)
+            .required(),
+      
+        password: Joi.string()
+            .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
+      
+        email: Joi.string()
+            .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'org', 'edu'] } })
+      }).with('password', 'email');
+
       const { email, password } = req.body;
-      await Joi.validate({ email, password }, signIn);    
+      await schema.validateAsync({ email, password });    
 
       const user = await User.findOne({ email });
       if (user && user.comparePasswords(password)) {
