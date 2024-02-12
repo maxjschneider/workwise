@@ -4,7 +4,7 @@ const headers = {
   "Access-Control-Allow-Credentials": true
 } 
 
-export const signup = user => (
+export const register = user => (
     fetch(process.env.REACT_APP_HOSTNAME + "/api/users", {
       method: "POST",
       body: JSON.stringify(user),
@@ -39,7 +39,6 @@ export const checkLoggedIn = async () => {
     );
     const { user } = await response.json();
     let preloadedState = {};
-    console.log(user);
 
     if (user) {
       preloadedState = {

@@ -1,31 +1,32 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { signup } from "../actions/session.js";
+import { register } from "../actions/session.js";
 
 const mapStateToProps = ({ errors }) => ({
-  errors
+    errors
 });
 
 const mapDispatchToProps = dispatch => ({
-  signup: user => dispatch(signup(user))
+    register: user => dispatch(register(user))
 });
 
-const register = ({ errors, signup }) => {
+const Register = ({ errors, register }) => {
     const handleSubmit = e => {
-      e.preventDefault();
-      const user = {
-        username: e.target[0].value,
-        position: "E1",
-        level: "0",
-        email: e.target[1].value,
-        password: e.target[2].value
-    };
+        e.preventDefault();
 
-    signup(user);
-};  
+        const user = {
+            username: e.target[0].value,
+            position: "E1",
+            level: "0",
+            email: e.target[1].value,
+            password: e.target[2].value
+        };
+
+        register(user);
+    };  
     
-return (
+    return (
       <>
         <h1>Signup</h1>
         <p>{errors}</p>
@@ -52,4 +53,4 @@ return (
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(register);
+)(Register);

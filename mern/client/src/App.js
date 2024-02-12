@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router-dom"
 import SiteNav from './components/navbar';
 import Schedule from './components/schedule';
 import Register from './components/register';
+import Login from './components/login';
 
 const App = () => {
   return (
@@ -14,7 +15,8 @@ const App = () => {
       <div style={{ margin: 20 }}></div>
       <Routes>
         <Route exact path="/schedule" element={<Schedule />} />    
-        <Route exact path="/register" element={<Register />} />     
+        <Route exact path="/register" element={<Register />} />      
+        <Route exact path="/login" element={<Login />} />   
       </Routes>
     </div>
   );

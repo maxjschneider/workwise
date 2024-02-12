@@ -22,8 +22,8 @@ export const login = user => async dispatch => {
     return dispatch(receiveErrors(data));
 };
   
-export const signup = user => async dispatch => {
-    const response = await apiUtil.signup(user);
+export const register = user => async dispatch => {
+    const response = await apiUtil.register(user);
     const data = await response.json();
     if (response.ok) {
       return dispatch(receiveCurrentUser(data));

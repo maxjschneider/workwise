@@ -3,10 +3,23 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import logo from "../images/transparent_logo.png"
+import Button from 'react-bootstrap/Button';
 
+import { connect } from "react-redux";
+import { logout } from "../actions/session";
+
+import { Person } from 'react-bootstrap-icons';
 import { LinkContainer } from 'react-router-bootstrap'
 
-export default function SiteNav() {
+const mapStateToProps = ({ session: {userId} }) => ({
+  loggedIn: Boolean(userId)
+});
+
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(logout())
+});
+
+const SiteNav = ({loggedIn, logout}) => {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
@@ -16,19 +29,33 @@ export default function SiteNav() {
           </Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ml-auto">
+        <Navbar.Collapse id="basic-navbar-nav" className="container-fluid">
+          <Nav >
             <LinkContainer to="/schedule">
               <Nav.Link>Schedule</Nav.Link>
             </LinkContainer>
           </Nav>
-          <Nav className="ms-auto">
-            <LinkContainer to="/register">
-              <Nav.Link>Register</Nav.Link>
-            </LinkContainer>
-          </Nav>
+          {
+            loggedIn ? 
+            <Nav className="ms-auto fw-bold ">
+              <Button variant="primary" onClick={logout}>Logout</Button>
+            </Nav>
+            :
+            <Nav className="ms-auto fw-bold ">
+              <LinkContainer to="/login">
+                <Nav.Link><Person size={30} /> Login</Nav.Link>
+              </LinkContainer>
+            </Nav>
+          }
+          
+
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
 }
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SiteNav);
