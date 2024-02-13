@@ -69,8 +69,9 @@ const Register = ({ errors, register }) => {
               </Button>
 
               <br/>
+              <br/>
               
-              <Link to="/login">Login</Link>
+              <Link to="/login">Already have an account?</Link>
             </Form>
 
         </Stack>
