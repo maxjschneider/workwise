@@ -20,11 +20,9 @@ export default function StaffDirectory() {
             return;
         }
 
-        
-        const users = await userResponse.json();
-
-        users.sort((a, b) => b.level - a.level);
-        setStaffList(users);
+        const user = await userResponse.json();
+        user.sort((a, b) => b.level - a.level);
+        setStaffList(user);
     }
 
 
@@ -33,8 +31,9 @@ export default function StaffDirectory() {
               <thead>
                 <tr className="black-row">
                   <th>Position</th>
+                  <th>First</th>
+                  <th>Last</th>
                   <th>Level</th>
-                  <th>Name</th>
                   <th>Email</th>
                 </tr>
               </thead>
@@ -43,8 +42,9 @@ export default function StaffDirectory() {
                     return (
                         <tr key={entry._id}>
                             <td>{entry.position}</td>
+                            <td>{entry.firstName}</td>
+                            <td>{entry.lastName}</td>
                             <td>{entry.level}</td>
-                            <td>{entry.name}</td>
                             <td>{entry.email}</td>
                         </tr>
                     )
