@@ -1,0 +1,18 @@
+{
+  "name": "scheduler",
+  "version": "1.0.0",
+  "description": "WorkWise seeks to provide an all-encompassing software solution to workplace management. We aim to be the go-to platform for any business seeking a comprehensive, user-friendly, and efficient tool to manage their workplace.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^8.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}

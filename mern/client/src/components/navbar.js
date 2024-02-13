@@ -22,6 +22,11 @@ export default function SiteNav() {
               <Nav.Link>Schedule</Nav.Link>
             </LinkContainer>
           </Nav>
+          <Nav className="ml-auto">
+            <LinkContainer to="/staffdirectory">
+              <Nav.Link>Staff Directory</Nav.Link>
+            </LinkContainer>
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
