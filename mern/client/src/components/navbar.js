@@ -35,6 +35,13 @@ const SiteNav = ({loggedIn, logout}) => {
               <Nav.Link>Schedule</Nav.Link>
             </LinkContainer>
           </Nav>
+          
+          <Nav className="ml-auto">
+            <LinkContainer to="/staffdirectory">
+              <Nav.Link>Staff Directory</Nav.Link>
+            </LinkContainer>
+          </Nav>
+          
           {
             loggedIn ? 
             <Nav className="ms-auto fw-bold ">
@@ -47,13 +54,6 @@ const SiteNav = ({loggedIn, logout}) => {
               </LinkContainer>
             </Nav>
           }
-          
-
-          <Nav className="ml-auto">
-            <LinkContainer to="/staffdirectory">
-              <Nav.Link>Staff Directory</Nav.Link>
-            </LinkContainer>
-          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
