@@ -16,11 +16,12 @@ const Register = ({ errors, register }) => {
         e.preventDefault();
 
         const user = {
-            username: e.target[0].value,
+            firstName: e.target[0].value,
+            lastName: e.target[1].value,
             position: "E1",
             level: "0",
-            email: e.target[1].value,
-            password: e.target[2].value
+            email: e.target[2].value,
+            password: e.target[3].value
         };
 
         register(user);
@@ -32,8 +33,12 @@ const Register = ({ errors, register }) => {
         <p>{errors}</p>
         <form onSubmit={handleSubmit}>
           <label>
-            Username:
-            <input type="text" name="username" />
+            First Name:
+            <input type="text" name="firstName" />
+          </label>
+          <label>
+            Last Name:
+            <input type="text" name="lastName" />
           </label>
           <label>
             Email:
