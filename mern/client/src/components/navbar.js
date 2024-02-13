@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 
 import { connect } from "react-redux";
 import { logout } from "../actions/session";
+import PrivateRoutes from "../util/route"
 
 import { Person } from 'react-bootstrap-icons';
 import { LinkContainer } from 'react-router-bootstrap'
@@ -29,32 +30,35 @@ const SiteNav = ({loggedIn, logout}) => {
           </Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav" className="container-fluid">
-          <Nav >
-            <LinkContainer className="text-dark" to="/schedule">
-              <Nav.Link>Schedule</Nav.Link>
-            </LinkContainer>
-          </Nav>
-          
-          <Nav >
-            <LinkContainer className="text-dark" to="/staffdirectory">
-              <Nav.Link>Staff Directory</Nav.Link>
-            </LinkContainer>
-          </Nav>
-          
           {
             loggedIn ? 
-            <Nav className="ms-auto fw-bold ">
-              <Button variant="primary" onClick={logout}>Logout</Button>
-            </Nav>
+            
+              <Navbar.Collapse id="basic-navbar-nav" className="container-fluid">
+                <Nav >
+                  <LinkContainer className="text-dark" to="/schedule">
+                    <Nav.Link>Schedule</Nav.Link>
+                  </LinkContainer>
+                </Nav>
+                
+                <Nav >
+                  <LinkContainer className="text-dark" to="/staffdirectory">
+                    <Nav.Link>Staff Directory</Nav.Link>
+                  </LinkContainer>
+                </Nav>
+
+                <Nav className="ms-auto fw-bold ">
+                  <Button variant="primary" onClick={logout}>Logout</Button>
+                </Nav>
+              </Navbar.Collapse>
             :
-            <Nav className="ms-auto fw-bold ">
-              <LinkContainer className="text-dark" to="/login">
-                <Nav.Link><Person size={30} /> Login</Nav.Link>
-              </LinkContainer>
-            </Nav>
+            <Navbar.Collapse id="basic-navbar-nav" className="container-fluid">
+              <Nav className="ms-auto fw-bold ">
+                <LinkContainer className="text-dark" to="/login">
+                  <Nav.Link><Person size={30} /> Login</Nav.Link>
+                </LinkContainer>
+              </Nav>
+            </Navbar.Collapse>
           }
-        </Navbar.Collapse>
       </Container>
     </Navbar>
   );

@@ -1,4 +1,5 @@
 import React from 'react';
+import PrivateRoutes from "./util/route"
 
 import { Route, Routes } from "react-router-dom"
 
@@ -8,6 +9,7 @@ import Schedule from './components/schedule';
 import StaffDirectory from './components/staffdirectory';
 import Register from './components/register';
 import Login from './components/login';
+import { ProtectedRoute } from './util/route';
 
 const App = () => {
   return (
@@ -15,9 +17,11 @@ const App = () => {
       <SiteNav />
       <div style={{ margin: 20 }}></div>
       <Routes>
-        <Route exact path="/schedule" element={<Schedule />} />
-        <Route exact path="/staffdirectory" element={<StaffDirectory />} /> 
-        <Route exact path="/schedule" element={<Schedule />} />    
+        <Route element={<PrivateRoutes />}>
+          <Route exact path="/schedule" element={<Schedule />} />
+          <Route exact path="/staffdirectory" element={<StaffDirectory />} /> 
+        </Route>
+        
         <Route exact path="/register" element={<Register />} />      
         <Route exact path="/login" element={<Login />} />   
       </Routes>
