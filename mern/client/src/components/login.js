@@ -52,7 +52,7 @@ const Login = ({ errors, login }) => {
 
             <br/>
             <br/>
-            <Link to="/register">Register</Link>
+            <Link to="/register">Don't have an account?</Link>
 
           </Form>
 
