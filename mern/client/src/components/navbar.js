@@ -31,13 +31,13 @@ const SiteNav = ({loggedIn, logout}) => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav" className="container-fluid">
           <Nav >
-            <LinkContainer to="/schedule">
+            <LinkContainer className="text-dark" to="/schedule">
               <Nav.Link>Schedule</Nav.Link>
             </LinkContainer>
           </Nav>
           
-          <Nav className="ml-auto">
-            <LinkContainer to="/staffdirectory">
+          <Nav >
+            <LinkContainer className="text-dark" to="/staffdirectory">
               <Nav.Link>Staff Directory</Nav.Link>
             </LinkContainer>
           </Nav>
@@ -49,7 +49,7 @@ const SiteNav = ({loggedIn, logout}) => {
             </Nav>
             :
             <Nav className="ms-auto fw-bold ">
-              <LinkContainer to="/login">
+              <LinkContainer className="text-dark" to="/login">
                 <Nav.Link><Person size={30} /> Login</Nav.Link>
               </LinkContainer>
             </Nav>
