@@ -42,6 +42,23 @@ userRouter.post("", async (req, res) => {
   }
 });
 
+userRouter.get("/", async (req, res) => {
+  const connectionString = process.env.ATLAS_URI || "";
+  const client = new MongoClient(connectionString);
+
+  let conn;
+  try {
+    console.log("Connecting to MongoDB Atlas...");
+    conn = await client.connect();
+  } catch(e) {
+    console.error(e);
+  }
+  let db = conn.db("workwise");
+  let collection = await db.collection("users");
+  let results = await collection.find({}).toArray();
+  res.send(results).status(200);
+});
+
 userRouter.get("/:id", async (req, res) => {
     const id = req.params.id;
     const user = await User.findOne({ _id: new mongoose.Types.ObjectId(id) });

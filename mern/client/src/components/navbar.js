@@ -49,6 +49,11 @@ const SiteNav = ({loggedIn, logout}) => {
           }
           
 
+          <Nav className="ml-auto">
+            <LinkContainer to="/staffdirectory">
+              <Nav.Link>Staff Directory</Nav.Link>
+            </LinkContainer>
+          </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
