@@ -13,8 +13,8 @@ userRouter.post("", async (req, res) => {
           .pattern(new RegExp('^[a-zA-Z]{3,30}$'))
           .required(),
 
-      firstName: Joi.string()
-          .pattern(new RegExp('^[a-zA-Z]{3,30}$'))
+      lastName: Joi.string()
+          .pattern(new RegExp('^[a-zA-Z]{2,30}$'))
           .required(),
     
       password: Joi.string()
