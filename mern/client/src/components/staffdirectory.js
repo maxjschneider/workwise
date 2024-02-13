@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Table } from 'react-bootstrap';
 
-const UserRow = (props) => (
-    <td>
-        <table>
-            <tbody>
-                
-            </tbody>
-        </table>
-    </td>
-)
 
 export default function StaffDirectory() {
     const [staffList, setStaffList] = useState([]);
