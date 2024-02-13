@@ -62,8 +62,6 @@ export default function Schedule() {
 
                 const user = await userResponse.json();
 
-                console.log(user);
-
                 responses[i][0].firstName = user.firstName;
                 responses[i][0].lastName = user.lastName;
                 responses[i][0].position = user.position;
