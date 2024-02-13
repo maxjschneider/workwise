@@ -9,8 +9,12 @@ const userRouter = express.Router();
 userRouter.post("", async (req, res) => {
   try {
     const schema = Joi.object({
-      username: Joi.string()
-          .pattern(new RegExp('^[a-zA-Z ]{3,30}$'))
+      firstName: Joi.string()
+          .pattern(new RegExp('^[a-zA-Z]{3,30}$'))
+          .required(),
+
+      firstName: Joi.string()
+          .pattern(new RegExp('^[a-zA-Z]{3,30}$'))
           .required(),
     
       password: Joi.string()
@@ -24,7 +28,8 @@ userRouter.post("", async (req, res) => {
 
     await schema.validateAsync(
     { 
-      username: req.body.username, 
+      firstName: req.body.firstName,
+      lastName: req.body.lastName, 
       password: req.body.password, 
       email: req.body.email 
     });    

@@ -20,9 +20,11 @@ export default function StaffDirectory() {
             return;
         }
 
-        const user = await userResponse.json();
-        user.sort((a, b) => b.level - a.level);
-        setStaffList(user);
+        
+        const users = await userResponse.json();
+
+        users.sort((a, b) => b.level - a.level);
+        setStaffList(users);
     }
 
 
