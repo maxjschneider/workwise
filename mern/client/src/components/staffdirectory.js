@@ -4,15 +4,14 @@ import { Table } from 'react-bootstrap';
 
 export default function StaffDirectory() {
     const [staffList, setStaffList] = useState([]);
-    const HOSTNAME = "http://localhost:5000"
-
+    
     useEffect(() => {
         fetchData();
     }, []);
 
     async function fetchData() {
 
-        const userResponse = await fetch(HOSTNAME + "/api/users/");
+        const userResponse = await fetch(process.env.REACT_APP_HOSTNAME + "/api/users/");
 
         if (!userResponse.ok) {
             const message = `An error occurred: ${userResponse.statusText}`;

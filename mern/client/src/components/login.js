@@ -58,23 +58,6 @@ const Login = ({ errors, login }) => {
 
       </Stack>
     </>
-
-        // <>
-        // <h1>Login</h1>
-        // <p>{errors}</p>
-        // <form onSubmit={handleSubmit}>
-        //     <label>
-        //     Email:
-        //     <input type="email" name="email" />
-        //     </label>
-        //     <label>
-        //     Password:
-        //     <input type="password" name="password" />
-        //     </label>
-        //     <input type="submit" value="Submit" />
-        // </form>
-        // <Link to="/register">Don't have an account?</Link>
-        // </>
         
     );
 };
