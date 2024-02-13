@@ -9,7 +9,18 @@ const ScheduleColumn = (props) => (
     <td>
         <table>
             <tbody>
-                {props.entry.map((entry, i) => <tr key={i}><td><h6 style={{fontSize:15}}>{entry.name} (<i>{entry.position}</i>)</h6>{getTime(entry.start)} - {getTime(entry.end)}</td></tr>)}
+                { props.entry.map((entry, i) => 
+                    <tr key={i}>
+                        <td>
+                            <h6 style={{fontSize:15}}>
+                                {entry.firstName + " " + entry.lastName} 
+                                <br/> (<i>{entry.position}</i>)
+                            </h6>
+                            
+                            { getTime(entry.start) } - { getTime(entry.end) }
+                        </td>
+                    </tr>
+                )}
             </tbody>
         </table>
     </td>
@@ -51,7 +62,10 @@ export default function Schedule() {
 
                 const user = await userResponse.json();
 
-                responses[i][0].name = user.name;
+                console.log(user);
+
+                responses[i][0].firstName = user.firstName;
+                responses[i][0].lastName = user.lastName;
                 responses[i][0].position = user.position;
             }
         }
@@ -78,10 +92,10 @@ export default function Schedule() {
                 <tbody>
                     <tr>
                         { 
-                            schedule.map((entry) => {
+                            schedule.map((entry, i) => {
                                 return (
                                     <ScheduleColumn 
-                                        key={entry.name} 
+                                        key={i} 
                                         entry={entry}
                                     />
                                 )

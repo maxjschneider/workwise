@@ -6,18 +6,10 @@ const { compareSync, hashSync } = pkg;
 
 const UserSchema = new mongoose.Schema({
   firstName: {
-    type: String,
-    validate: {
-      validator: username => User.doesNotExist({ username }),
-      message: "Username already exists"
-    }
+    type: String
   },
   lastName: {
-    type: String,
-    validate: {
-      validator: username => User.doesNotExist({ username }),
-      message: "Username already exists"
-    }
+    type: String
   },
   position: {
     type: String,
