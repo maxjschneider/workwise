@@ -27,7 +27,7 @@ npm install
 Start Server:
 ```
 cd mern/server
-node server.mjs
+npm start
 ```
 
 Start Frontend:
