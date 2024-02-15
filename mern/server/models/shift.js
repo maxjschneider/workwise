@@ -13,7 +13,6 @@ const ScheduleEntrySchema = new mongoose.Schema({
     type: Date,
     required: true,
     default: new Date("1975-11-11T11:11:11.111+00:00")
-  
   }
 });
 
