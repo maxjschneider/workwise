@@ -9,8 +9,8 @@ const ScheduleColumn = (props) => (
     <td>
         <table>
             <tbody>
-                { props.entry.map((entry, i) => 
-                    <tr key={i}>
+                { props.entry.map((entry) => 
+                    <tr key={entry._id}>
                         <td>
                             <h6 style={{fontSize:15}}>
                                 {entry.firstName + " " + entry.lastName} 
@@ -74,7 +74,7 @@ export default function Schedule() {
 
     return (
         <div>
-            <table className="table table-striped" style={{ marginTop: 20 }}>
+            <table className="table table-striped table-bordered px-5" style={{ marginTop: 20 }}>
                 <thead>
                     <tr>
                         <th scope="col" className="col-1">Sunday</th>
