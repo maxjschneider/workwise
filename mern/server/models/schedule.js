@@ -23,5 +23,5 @@ const ScheduleEntrySchema = new mongoose.Schema({
   }
 });
 
-const ScheduleEntry = mongoose.model("schedule", ScheduleEntrySchema);
+const ScheduleEntry = mongoose.model("schedule", ScheduleEntrySchema, "schedule");
 export default ScheduleEntry;
