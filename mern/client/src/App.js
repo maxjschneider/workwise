@@ -1,5 +1,6 @@
 import React from 'react';
 import PrivateRoutes from "./util/route"
+import Button from "./components/timeclock"
 
 import { Route, Routes } from "react-router-dom"
 
@@ -20,6 +21,7 @@ const App = () => {
         <Route element={<PrivateRoutes />}>
           <Route exact path="/schedule" element={<Schedule />} />
           <Route exact path="/staffdirectory" element={<StaffDirectory />} /> 
+          <Route exact path="/timeclock" element={<Button/>} /> 
         </Route>
         
         <Route exact path="/register" element={<Register />} />      

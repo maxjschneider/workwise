@@ -46,6 +46,12 @@ const SiteNav = ({loggedIn, logout}) => {
                   </LinkContainer>
                 </Nav>
 
+                <Nav >
+                  <LinkContainer className="text-dark" to="/timeclock">
+                    <Nav.Link>Clock In/Out</Nav.Link>
+                  </LinkContainer>
+                </Nav>
+
                 <Nav className="ms-auto fw-bold ">
                   <Button variant="primary" onClick={logout}>Logout</Button>
                 </Nav>
