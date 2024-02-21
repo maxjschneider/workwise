@@ -9,6 +9,7 @@ import Schedule from './components/schedule';
 import StaffDirectory from './components/staffdirectory';
 import Register from './components/register';
 import Login from './components/login';
+import Button from "./components/timeclock"
 import { ProtectedRoute } from './util/route';
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
         <Route element={<PrivateRoutes />}>
           <Route exact path="/schedule" element={<Schedule />} />
           <Route exact path="/staffdirectory" element={<StaffDirectory />} /> 
+          <Route exact path="/timeclock" element={<Button/>} /> 
         </Route>
         
         <Route exact path="/register" element={<Register />} />      
