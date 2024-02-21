@@ -1,6 +1,5 @@
 import React from 'react';
 import PrivateRoutes from "./util/route"
-import Button from "./components/timeclock"
 
 import { Route, Routes } from "react-router-dom"
 
@@ -10,6 +9,7 @@ import Schedule from './components/schedule';
 import StaffDirectory from './components/staffdirectory';
 import Register from './components/register';
 import Login from './components/login';
+import Button from "./components/timeclock"
 import { ProtectedRoute } from './util/route';
 
 const App = () => {
