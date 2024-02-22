@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-
+import Button from 'react-bootstrap/Button';
 import { clockIn, clockOut } from "../util/timeclock";
 
 export default function TimeClock() {
   const [status, setStatus] = useState("");
-
+  
   const handleSubmit = async e => {
     e.preventDefault();
     
@@ -14,17 +14,38 @@ export default function TimeClock() {
   
       setStatus(result);
     } else if (e.target.value === "clockOut") {
-      // TODO
+      const response = await clockOut();
+      const result = await response.json();
+
+      setStatus(result);
     }
   }  
 
-  return (
-    <div>
-      <h1>i exist</h1>
+  const date = new Date().toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
 
-      <button value={"clockIn"} onClick={ handleSubmit }>
+  const time = new Date().toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric'
+  });
+
+  return (
+    <div style={{ textAlign: "center" }}>
+      <h1>Welcome </h1>
+      <h2>Current time is: </h2>
+      <h3>{date}</h3>
+      <h4>{time}</h4>
+      <Button variant="outline-success" value={"clockIn"} onClick={ handleSubmit }>
         Clock In
-      </button>
+      </Button>
+
+      <Button variant="outline-danger" value={"clockOut"} onClick={ handleSubmit }>
+        Clock Out
+      </Button>
 
       <p>{ status }</p>
 
