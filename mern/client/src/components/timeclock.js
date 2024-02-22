@@ -10,7 +10,7 @@ import { getUser, clockIn, clockOut, getUserStatus, isClockedIn } from "../util/
 export default function TimeClock() {
   const [message, setMessage] = useState("");
   const [user, setUser] = useState(null);
-  const [status, setStatus] = useState({ hours: 0.0, isClockedIn: false });
+  const [status, setStatus] = useState({ hours: 0.0, isClockedIn: false, shifts: [] });
   
   useEffect(() => {
     fetchData();
@@ -30,16 +30,17 @@ export default function TimeClock() {
     if (e.target.value === "clockIn") {
       const response = await clockIn();
       const result = await response.json();
-  
       setMessage(result);
-      setStatus({isClockedIn: true});
+      
     } else if (e.target.value === "clockOut") {
       const response = await clockOut();
       const result = await response.json();
 
       setMessage(result);
-      setStatus({isClockedIn: false});
     }
+
+    const newStatus = await getUserStatus()
+    setStatus(newStatus); 
   }  
 
   const date = new Date().toLocaleDateString('en-US', {
@@ -68,7 +69,7 @@ export default function TimeClock() {
           <br />
           { status.isClockedIn ? 
           <Button size="lg" variant="outline-danger mx-2" value={"clockOut"} onClick={ handleSubmit }>
-          Clock Out
+            Clock Out
           </Button>
           :
           <Button size="lg" variant="outline-success  mx-2" value={"clockIn"} onClick={ handleSubmit }>
