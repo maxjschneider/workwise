@@ -1,10 +1,21 @@
 import React, { useState } from "react";
 import Button from 'react-bootstrap/Button';
-import { clockIn, clockOut } from "../util/timeclock";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import "bootstrap/dist/css/bootstrap.css";
 
-export default function TimeClock() {
+import { clockIn, clockOut } from "../util/timeclock";
+import { connect } from "react-redux";
+
+const mapStateToProps = ({session: { userId }}) => ({
+  userId: userId
+});
+
+function TimeClock(user) {
   const [status, setStatus] = useState("");
-  
+  const [userId] = useState(user.userId);
+
   const handleSubmit = async e => {
     e.preventDefault();
     
@@ -34,21 +45,36 @@ export default function TimeClock() {
   });
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <h1>Welcome </h1>
-      <h2>Current time is: </h2>
-      <h3>{date}</h3>
-      <h4>{time}</h4>
-      <Button variant="outline-success" value={"clockIn"} onClick={ handleSubmit }>
-        Clock In
-      </Button>
+    <Container style={{textAlign: "center"}}>
+      <Row className="align-items-center">
+        <Col>
+          <h3>{date}</h3>
+          <h4>{time}</h4>
+          
+          <br />
 
-      <Button variant="outline-danger" value={"clockOut"} onClick={ handleSubmit }>
-        Clock Out
-      </Button>
+          <Button size="lg" variant="outline-success  mx-2" value={"clockIn"} onClick={ handleSubmit }>
+            Clock In
+          </Button>
 
-      <p>{ status }</p>
+          <Button size="lg" variant="outline-danger mx-2" value={"clockOut"} onClick={ handleSubmit }>
+            Clock Out
+          </Button>
 
-    </div>
+          <p>{ status }</p>
+        
+        </Col>
+
+        <Col>
+        
+        
+        </Col>
+      </Row>
+    </Container>
   );
 }
+
+
+export default connect(
+  mapStateToProps
+)(TimeClock);
