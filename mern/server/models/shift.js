@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const ScheduleEntrySchema = new mongoose.Schema({
+const ShiftEntrySchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
     required: true
@@ -16,5 +16,5 @@ const ScheduleEntrySchema = new mongoose.Schema({
   }
 });
 
-const ScheduleEntry = mongoose.model("schedule", ScheduleEntrySchema, "schedule");
-export default ScheduleEntry;
+const ShiftEntry = mongoose.model("shifts", ShiftEntrySchema, "shifts");
+export default ShiftEntry;

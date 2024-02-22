@@ -1,8 +1,10 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import User from '../models/user.js';
+import Shift from '../models/shift.js';
 import Joi from "joi";
 import { parseError, sessionizeUser } from "../util/helpers.js";
+import ShiftEntry from '../models/shift.js';
 
 const userRouter = express.Router();
 
@@ -55,6 +57,7 @@ userRouter.get("/", async (req, res) => {
 
 userRouter.get("/:id", async (req, res) => {
     const id = req.params.id;
+    
     const user = await User.findOne({ _id: new mongoose.Types.ObjectId(id) });
 
     if (!user) {
@@ -62,6 +65,24 @@ userRouter.get("/:id", async (req, res) => {
     } else {
         res.send(user).status(200);
     }
+});
+
+userRouter.get("/hours/:id", async (req, res) => {
+  const id = req.params.id;
+  
+  const shifts = await ShiftEntry.find({ user_id: id, end: {$ne: new Date("1975-11-11T11:11:11.111+00:00")} });
+
+  var hourSum = 0.0;
+
+  for (let i = 0; i < shifts.length; i++) {
+    hourSum += Math.abs(shifts[i].end - shifts[i].start) / 36e5;
+  }
+
+  if (!shifts) {
+      res.send(JSON.stringify("Error")).status(404);
+  } else {
+      res.send(JSON.stringify(hourSum)).status(200);
+  }
 });
 
 export default userRouter;
