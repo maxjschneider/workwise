@@ -18,7 +18,9 @@ export default function TimeClock() {
   async function fetchData() {
     const sessionUser = await getUser();
     const hours = await getUserTotalHours();
-    console.log(hours);
+    
+    sessionUser.hours = hours;
+
     setUser(sessionUser);
   }
 
@@ -77,6 +79,17 @@ export default function TimeClock() {
       
         <Col>
         
+        <>
+        {
+           // total hours goes here
+           
+           // hours for logged in user are in user.hours
+           
+           // warning - check to make sure user.hours is not null because
+           // it will be null on first render 
+
+        }
+        </>
         
         </Col>
       </Row>
