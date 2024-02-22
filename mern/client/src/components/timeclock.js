@@ -8,8 +8,9 @@ import "bootstrap/dist/css/bootstrap.css";
 import { getUser, clockIn, clockOut, getUserStatus } from "../util/user"
 
 export default function TimeClock() {
-  const [status, setStatus] = useState("");
+  const [message, setMessage] = useState("");
   const [user, setUser] = useState(null);
+  const [status, setStatus] = useState({ hours: 0.0, isClockedIn: false });
   
   useEffect(() => {
     fetchData();
@@ -19,10 +20,8 @@ export default function TimeClock() {
     const sessionUser = await getUser();
     const status = await getUserStatus();
     
-    sessionUser.hours = status.hours;
-    sessionUser.isClockedIn = status.isClockedIn;
-
     setUser(sessionUser);
+    setStatus(status);
   }
 
   const handleSubmit = async e => {
@@ -32,12 +31,12 @@ export default function TimeClock() {
       const response = await clockIn();
       const result = await response.json();
   
-      setStatus(result);
+      setMessage(result);
     } else if (e.target.value === "clockOut") {
       const response = await clockOut();
       const result = await response.json();
 
-      setStatus(result);
+      setMessage(result);
     }
   }  
 
@@ -74,7 +73,7 @@ export default function TimeClock() {
             Clock Out
           </Button>
 
-          <p>{ status }</p>
+          <p>{ message }</p>
         
         </Col>
       
