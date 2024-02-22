@@ -83,11 +83,7 @@ export default function TimeClock() {
         {
            // total hours goes here
            
-           // hours for logged in user are in user.hours
-
-           // warning - check to make sure user.hours is not null because
-           // it will be null on first render 
-
+           // hours for current user are stored in status.hours
         }
         </>
         
