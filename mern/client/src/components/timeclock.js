@@ -85,6 +85,7 @@ export default function TimeClock() {
            // total hours goes here
            
            // hours for current user are stored in status.hours
+           // list of previous shifts are stored in status.shifts
         }
         </>
         
