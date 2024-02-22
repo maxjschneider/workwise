@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import "bootstrap/dist/css/bootstrap.css";
 
-import { getUser, clockIn, clockOut, getUserStatus, isClockedIn } from "../util/user"
+import { getUser, clockIn, clockOut, getUserStatus } from "../util/user"
 
 export default function TimeClock() {
   const [message, setMessage] = useState("");
