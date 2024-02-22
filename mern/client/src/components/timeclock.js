@@ -1,18 +1,24 @@
 import React from "react";
 
-function MyButton() {
+import { clockIn } from "../util/timeclock";
+
+const handleClockIn = async () => {
+  console.log(clockIn());
+}
+
+function ClockInButton() {
     return (
-      <button>
-        I'm a button
+      <button onClick={ handleClockIn }>
+        Clock In
       </button>
     );
-  }
+}
   
-  export default function ImAButton() {
-    return (
-      <div>
-        <h1>i exist</h1>
-        <MyButton />
-      </div>
-    );
-  }
+export default function timeClock() {
+  return (
+    <div>
+      <h1>i exist</h1>
+      <ClockInButton />
+    </div>
+  );
+}
