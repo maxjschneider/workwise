@@ -1,20 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import "bootstrap/dist/css/bootstrap.css";
 
-import { clockIn, clockOut } from "../util/timeclock";
-import { connect } from "react-redux";
+import { getUser, clockIn, clockOut, getUserTotalHours } from "../util/user"
 
-const mapStateToProps = ({session: { userId }}) => ({
-  userId: userId
-});
-
-function TimeClock(user) {
+export default function TimeClock() {
   const [status, setStatus] = useState("");
-  const [userId] = useState(user.userId);
+  const [user, setUser] = useState(null);
+  
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    const sessionUser = await getUser();
+    const hours = await getUserTotalHours();
+    console.log(hours);
+    setUser(sessionUser);
+  }
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -48,6 +54,10 @@ function TimeClock(user) {
     <Container style={{textAlign: "center"}}>
       <Row className="align-items-center">
         <Col>
+          <h1>{ user == null ? "" : user.firstName + " " + user.lastName }</h1>
+
+          <br />
+        
           <h3>{date}</h3>
           <h4>{time}</h4>
           
@@ -64,7 +74,7 @@ function TimeClock(user) {
           <p>{ status }</p>
         
         </Col>
-
+      
         <Col>
         
         
@@ -73,8 +83,3 @@ function TimeClock(user) {
     </Container>
   );
 }
-
-
-export default connect(
-  mapStateToProps
-)(TimeClock);

@@ -47,7 +47,7 @@ const SiteNav = ({loggedIn, logout}) => {
 
                 <Nav >
                   <LinkContainer className="text-dark" to="/timeclock">
-                    <Nav.Link>Clock In/Out</Nav.Link>
+                    <Nav.Link>Timeclock</Nav.Link>
                   </LinkContainer>
                 </Nav>
 
