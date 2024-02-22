@@ -19,7 +19,6 @@ export default function TimeClock() {
   async function fetchData() {
     const sessionUser = await getUser();
     const status = await getUserStatus();
-    console.log(status.shifts);
     
     setUser(sessionUser);
     setStatus(status);
