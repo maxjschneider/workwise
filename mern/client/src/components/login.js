@@ -15,7 +15,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const Login = ({ errors, login }) => {
-  const handleSubmit = e => {
+    const handleSubmit = e => {
         e.preventDefault();
         const user = {
             email: e.target[0].value,

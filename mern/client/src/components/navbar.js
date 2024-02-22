@@ -7,7 +7,6 @@ import Button from 'react-bootstrap/Button';
 
 import { connect } from "react-redux";
 import { logout } from "../actions/session";
-import PrivateRoutes from "../util/route"
 
 import { Person } from 'react-bootstrap-icons';
 import { LinkContainer } from 'react-router-bootstrap'

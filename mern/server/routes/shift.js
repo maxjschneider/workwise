@@ -1,5 +1,6 @@
 import express from 'express';
-import ShiftEntry from '../models/shift.js.js';
+import ShiftEntry from '../models/shift.js';
+import { parseError } from "../util/helpers.js";
 
 const scheduleRouter = express.Router();
 
@@ -8,22 +9,32 @@ scheduleRouter.post("/clockin", async (req, res) => {
         const { user_id } = req.body;
 
         const currentShift = 
-            await ShiftEntry.find({user_id: user_id, end: new Date("1975-11-11T11:11:11.111+00:00")});
+            await ShiftEntry.findOne({user_id: user_id, end: new Date("1975-11-11T11:11:11.111+00:00")});
 
-        if (currentShift != null) 
-            throw new Error("User is already clocked in.");
 
+        if (currentShift != null) {
+            res.send(JSON.stringify("User is already clocked in."));
+            return;
+        }
+        
+        var now = new Date();
+        // convert to EST, EST 4 hours behind so -4*60= -240
+        now.setMinutes(now.getMinutes() - 240)
+
+        var dateString = now.toISOString();
+        
         var entry = new ShiftEntry({ 
             user_id: user_id, 
-            start: Date.now().toISOString(),
+            start: dateString,
             end: new Date("1975-11-11T11:11:11.111+00:00")
         });
 
         entry.save();
 
-        res.send("Clock in successful.");
+        res.send(JSON.stringify("Clock in successful."));
     } catch (err) {
-        res.status(400).send(err);
+        console.log(err);
+        res.status(400).send(parseError(err.message));
     }
 });
 
@@ -32,16 +43,26 @@ scheduleRouter.post("/clockout", async (req, res) => {
         const { user_id } = req.body;
 
         const currentShift = 
-            await ShiftEntry.find({user_id: user_id, end: new Date("1975-11-11T11:11:11.111+00:00")});
+            await ShiftEntry.findOne({user_id: user_id, end: new Date("1975-11-11T11:11:11.111+00:00")});
 
-        if (currentShift == null) 
-            throw new Error("User is not clocked in.");
 
-        await currentShift.updateOne({ end : Date.now().toISOString() });
+            console.log(currentShift);
+        if (currentShift == null)  {
+            res.send(JSON.stringify("User is not clocked in."));
+            return;
+        }
 
-        res.send("Clock out successful.");
+        var now = new Date();
+        // convert to EST, EST 4 hours behind so -4*60= -240
+        now.setMinutes(now.getMinutes() - 240)
+
+        var dateString = now.toISOString();
+
+        await currentShift.updateOne({ end : dateString });
+
+        res.send(JSON.stringify("Clock out successful."));
     } catch (err) {
-        res.status(400).send(err);
+        res.status(400).send(parseError(err.message));
     }
 });
 

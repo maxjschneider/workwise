@@ -1,24 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { clockIn } from "../util/timeclock";
+import { clockIn, clockOut } from "../util/timeclock";
 
-const handleClockIn = async () => {
-  console.log(clockIn());
-}
+export default function TimeClock() {
+  const [status, setStatus] = useState("");
 
-function ClockInButton() {
-    return (
-      <button onClick={ handleClockIn }>
-        Clock In
-      </button>
-    );
-}
+  const handleSubmit = async e => {
+    e.preventDefault();
+    
+    if (e.target.value === "clockIn") {
+      const response = await clockIn();
+      const result = await response.json();
   
-export default function timeClock() {
+      setStatus(result);
+    } else if (e.target.value === "clockOut") {
+      // TODO
+    }
+  }  
+
   return (
     <div>
       <h1>i exist</h1>
-      <ClockInButton />
+
+      <button value={"clockIn"} onClick={ handleSubmit }>
+        Clock In
+      </button>
+
+      <p>{ status }</p>
+
     </div>
   );
 }
