@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import "bootstrap/dist/css/bootstrap.css";
 
-import { getUser, clockIn, clockOut, getUserStatus } from "../util/user"
+import { getUser, clockIn, clockOut, getUserStatus, isClockedIn } from "../util/user"
 
 export default function TimeClock() {
   const [message, setMessage] = useState("");
@@ -32,11 +32,13 @@ export default function TimeClock() {
       const result = await response.json();
   
       setMessage(result);
+      setStatus({isClockedIn: true});
     } else if (e.target.value === "clockOut") {
       const response = await clockOut();
       const result = await response.json();
 
       setMessage(result);
+      setStatus({isClockedIn: false});
     }
   }  
 
@@ -64,19 +66,21 @@ export default function TimeClock() {
           <h4>{time}</h4>
           
           <br />
-
+          { status.isClockedIn ? 
+          <Button size="lg" variant="outline-danger mx-2" value={"clockOut"} onClick={ handleSubmit }>
+          Clock Out
+          </Button>
+          :
           <Button size="lg" variant="outline-success  mx-2" value={"clockIn"} onClick={ handleSubmit }>
             Clock In
           </Button>
-
-          <Button size="lg" variant="outline-danger mx-2" value={"clockOut"} onClick={ handleSubmit }>
-            Clock Out
-          </Button>
-
+          
+          
+          }
           <p>{ message }</p>
         
         </Col>
-      
+          
         <Col>
         
         <>
