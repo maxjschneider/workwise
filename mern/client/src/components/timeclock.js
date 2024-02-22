@@ -10,7 +10,7 @@ import { getUser, clockIn, clockOut, getUserStatus } from "../util/user"
 export default function TimeClock() {
   const [message, setMessage] = useState("");
   const [user, setUser] = useState(null);
-  const [status, setStatus] = useState({ hours: 0.0, isClockedIn: false });
+  const [status, setStatus] = useState({ hours: 0.0, isClockedIn: false, shifts: [] });
   
   useEffect(() => {
     fetchData();
@@ -19,6 +19,7 @@ export default function TimeClock() {
   async function fetchData() {
     const sessionUser = await getUser();
     const status = await getUserStatus();
+    console.log(status.shifts);
     
     setUser(sessionUser);
     setStatus(status);

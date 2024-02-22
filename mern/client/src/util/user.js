@@ -56,11 +56,11 @@ export const getUser = async () => {
     return user;
 }
 
-// hours and isclockedin 
+// hours, isclockedin, and shifts 
 export const getUserStatus = async () => {
     const user_id = window.getState().session.userId;
   
-    const response = await fetch(process.env.REACT_APP_HOSTNAME + "/api/users/hours/" + user_id, {
+    const response = await fetch(process.env.REACT_APP_HOSTNAME + "/api/users/status/" + user_id, {
       method: "GET",
       headers: headers,
       credentials:"include"
