@@ -26,6 +26,21 @@ export const clockOut = async () => {
     })
 };
 
+export const isClockedIn = async () => {
+    const user_id = window.getState().session.userId;
+  
+    const response = await fetch(process.env.REACT_APP_HOSTNAME + '/api/users/' + user_id, {
+      method: "GET",
+      headers: headers,
+      credentials: "include"
+      }
+    );
+  
+    const user = await response.json();
+
+    return user;
+}
+
 export const getUser = async () => {
     const user_id = window.getState().session.userId;
   
@@ -41,7 +56,8 @@ export const getUser = async () => {
     return user;
 }
 
-export const getUserTotalHours = async () => {
+// hours and isclockedin 
+export const getUserStatus = async () => {
     const user_id = window.getState().session.userId;
   
     const response = await fetch(process.env.REACT_APP_HOSTNAME + "/api/users/hours/" + user_id, {
@@ -50,7 +66,7 @@ export const getUserTotalHours = async () => {
       credentials:"include"
     });
 
-    const hours = await response.json();
+    const status = await response.json();
 
-    return hours;
+    return status;
 };

@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import "bootstrap/dist/css/bootstrap.css";
 
-import { getUser, clockIn, clockOut, getUserTotalHours } from "../util/user"
+import { getUser, clockIn, clockOut, getUserStatus } from "../util/user"
 
 export default function TimeClock() {
   const [status, setStatus] = useState("");
@@ -17,9 +17,10 @@ export default function TimeClock() {
 
   async function fetchData() {
     const sessionUser = await getUser();
-    const hours = await getUserTotalHours();
+    const status = await getUserStatus();
     
-    sessionUser.hours = hours;
+    sessionUser.hours = status.hours;
+    sessionUser.isClockedIn = status.isClockedIn;
 
     setUser(sessionUser);
   }
@@ -84,7 +85,7 @@ export default function TimeClock() {
            // total hours goes here
            
            // hours for logged in user are in user.hours
-           
+
            // warning - check to make sure user.hours is not null because
            // it will be null on first render 
 
