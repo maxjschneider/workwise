@@ -1,5 +1,6 @@
 import express from 'express';
 import ScheduleEntry from '../models/schedule.js';
+import User from "../models/user.js"
 
 import { parseError } from "../util/helpers.js";
 
@@ -20,7 +21,22 @@ scheduleRouter.post("", async (req, res) => {
 
 scheduleRouter.get("/day/:day", async (req, res) => {
     const targetDay = req.params.day;
-    const result = await ScheduleEntry.find({ day: targetDay });
+    var response = await ScheduleEntry.find({ day: targetDay });
+
+    var result = [];
+
+    for (let i = 0; i < response.length; i++) {
+        const user = await User.findOne({ _id : response[i].user_id })
+
+        // make a deep copy because for some reason response is not modifiable??
+        let dict = JSON.parse(JSON.stringify(response[i]));
+
+        dict.firstName = user.firstName;
+        dict.lastName = user.lastName;
+        dict.position = user.position;
+
+        result.push(dict);
+    }
 
     res.send(result).status(200);
 });

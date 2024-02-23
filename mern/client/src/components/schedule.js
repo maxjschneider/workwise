@@ -96,22 +96,6 @@ export default function Schedule() {
             }
             
             responses[i] = await response.json();
-
-            if (responses[i][0] != null) {
-                const userResponse = await fetch(process.env.REACT_APP_HOSTNAME + "/api/users/" + responses[i][0].user_id);
-
-                if (!userResponse.ok) {
-                    const message = `An error occurred: ${userResponse.statusText}`;
-                    window.alert(message);
-                    return;
-                }
-
-                const user = await userResponse.json();
-
-                responses[i][0].firstName = user.firstName;
-                responses[i][0].lastName = user.lastName;
-                responses[i][0].position = user.position;
-            }
         }
 
         setSchedule(responses);
