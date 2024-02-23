@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react"
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap/dist/css/bootstrap.css";
 import Modal from 'react-bootstrap/Modal'; 
 import Button from 'react-bootstrap/Button'; 
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 
 import { updateUserScheduleEntry } from "../util/user";
 
@@ -59,56 +61,52 @@ function EditButton(props) {
           <Modal.Header closeButton>
             <Modal.Title>Schedule</Modal.Title>
           </Modal.Header>
-          <Modal.Body>{props.entry._id}</Modal.Body>
-          <Modal.Footer>
+          <Modal.Body>
+                <Form onSubmit={handleSubmit}>
 
-            <Form onSubmit={handleSubmit}>
-
-                <Form.Group className="mb-3" controlId="day">
-                    <Form.Select defaultValue={"Monday"}>
-                        <option value="Monday">Monday</option>
-                        <option value="Tuesday">Tuesday</option>
-                        <option value="Wednesday">Wednesday</option>
-                        <option value="Thursday">Thursday</option>
-                        <option value="Friday">Friday</option>
-                        <option value="Saturday">Saturday</option>
-                        <option value="Sunday">Sunday</option>
-                    </Form.Select>
-                </Form.Group>
-
-                <Row xs={4}>
-                    <Form.Group as={Col} controlId="startTimeHours">
-                        <Form.Label>Start Time</Form.Label>
-                        <Form.Control type="text" placeholder={getMilitaryTime(props.entry.start)} />
+                    <Form.Group className="mb-3" controlId="day">
+                        <Form.Select defaultValue="" required>
+                            <option value="" disabled>Please Select a Day</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                            <option value="Sunday">Sunday</option>
+                        </Form.Select>
                     </Form.Group>
 
-                    <Form.Group as={Col} controlId="startTimeMinutes">
-                        <Form.Label>End Time</Form.Label>
-                        <Form.Control type="text" placeholder={getMilitaryTime(props.entry.end)} />
-                    </Form.Group>
-                </Row>
-                
-                <p className="my-2"><i>Times must be inputted in 24 hour time.</i></p>
+                    <Row xs={4}>
+                        <Form.Group as={Col} controlId="startTimeHours">
+                            <Form.Label>Start Time</Form.Label>
+                            <Form.Control type="text" placeholder={getMilitaryTime(props.entry.start)} />
+                        </Form.Group>
+
+                        <Form.Group as={Col} controlId="startTimeMinutes">
+                            <Form.Label>End Time</Form.Label>
+                            <Form.Control type="text" placeholder={getMilitaryTime(props.entry.end)} />
+                        </Form.Group>
+                    </Row>
                     
-                <br />
+                    <p className="my-2"><i>Times must be inputted in 24 hour time.</i></p>
+                        
+                    <br />
 
-                <Button variant="secondary mx-2" onClick={handleClose}>
-                Close
-                </Button>
+                    <Button variant="secondary mx-2" onClick={handleClose}>
+                    Close
+                    </Button>
 
-                <Button variant="primary" type="submit">
-                Save Changes
-                </Button>
-
-            </Form>
-
-        </Modal.Footer>
+                    <Button variant="primary" type="submit">
+                    Save Changes
+                    </Button>
+                </Form>
+        </Modal.Body>
         </Modal>
       </>
     );
 }  
 
-//pass in the entry._id data (time,etc) to the modal
 const ScheduleColumn = (props) => (
     <td>
         <table> 

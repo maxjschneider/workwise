@@ -8,6 +8,12 @@ import "bootstrap/dist/css/bootstrap.css";
 import Clock from "./utils/clock"
 import { getUser, clockIn, clockOut, getUserStatus } from "../util/user"
 
+const ShiftColumn = (props) => (
+  <>
+     { props.entry.start }
+  </>
+)
+
 export default function TimeClock() {
   const [message, setMessage] = useState("");
   const [user, setUser] = useState(null);
@@ -78,13 +84,10 @@ export default function TimeClock() {
           
         <Col>
         
+
+        
         <>
-        {
-           // total hours goes here
-           
-           // hours for current user are stored in status.hours
-           // list of previous shifts are stored in status.shifts
-        }
+        
         </>
         
         </Col>
