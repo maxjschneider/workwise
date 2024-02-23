@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import "bootstrap/dist/css/bootstrap.css";
 
+import Clock from "./utils/clock"
 import { getUser, clockIn, clockOut, getUserStatus } from "../util/user"
 
 export default function TimeClock() {
@@ -63,7 +64,7 @@ export default function TimeClock() {
           <br />
         
           <h3>{date}</h3>
-          <h4>{time}</h4>
+          <h4><Clock /></h4>
           
           <br />
           { 
