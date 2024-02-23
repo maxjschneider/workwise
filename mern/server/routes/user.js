@@ -67,21 +67,28 @@ userRouter.get("/:id", async (req, res) => {
     }
 });
 
-userRouter.get("/hours/:id", async (req, res) => {
+userRouter.get("/status/:id", async (req, res) => {
   const id = req.params.id;
   
   const shifts = await ShiftEntry.find({ user_id: id, end: {$ne: new Date("1975-11-11T11:11:11.111+00:00")} });
 
-  var hourSum = 0.0;
+  var status = { hours: 0.0, clockedIn: false, shifts: shifts };
 
   for (let i = 0; i < shifts.length; i++) {
-    hourSum += Math.abs(shifts[i].end - shifts[i].start) / 36e5;
+    status.hours += Math.abs(shifts[i].end - shifts[i].start) / 36e5;
+  }
+
+  const currentShift = 
+    await ShiftEntry.findOne({user_id: id, end: new Date("1975-11-11T11:11:11.111+00:00")});
+
+  if (currentShift != null)  {
+    status.clockedIn = true;
   }
 
   if (!shifts) {
       res.send(JSON.stringify("Error")).status(404);
   } else {
-      res.send(JSON.stringify(hourSum)).status(200);
+      res.send(JSON.stringify(status)).status(200);
   }
 });
 

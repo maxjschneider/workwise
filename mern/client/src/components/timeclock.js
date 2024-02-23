@@ -5,11 +5,19 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import "bootstrap/dist/css/bootstrap.css";
 
-import { getUser, clockIn, clockOut, getUserTotalHours } from "../util/user"
+import Clock from "./utils/clock"
+import { getUser, clockIn, clockOut, getUserStatus } from "../util/user"
+
+const ShiftColumn = (props) => (
+  <>
+     { props.entry.start }
+  </>
+)
 
 export default function TimeClock() {
-  const [status, setStatus] = useState("");
+  const [message, setMessage] = useState("");
   const [user, setUser] = useState(null);
+  const [status, setStatus] = useState({ hours: 0.0, clockedIn: false, shifts: [] });
   
   useEffect(() => {
     fetchData();
@@ -17,11 +25,10 @@ export default function TimeClock() {
 
   async function fetchData() {
     const sessionUser = await getUser();
-    const hours = await getUserTotalHours();
+    const status = await getUserStatus();
     
-    sessionUser.hours = hours;
-
     setUser(sessionUser);
+    setStatus(status);
   }
 
   const handleSubmit = async e => {
@@ -30,14 +37,16 @@ export default function TimeClock() {
     if (e.target.value === "clockIn") {
       const response = await clockIn();
       const result = await response.json();
-  
-      setStatus(result);
+      setMessage(result);
+      
     } else if (e.target.value === "clockOut") {
       const response = await clockOut();
       const result = await response.json();
 
-      setStatus(result);
+      setMessage(result);
     }
+
+    setStatus(await getUserStatus()); 
   }  
 
   const date = new Date().toLocaleDateString('en-US', {
@@ -45,11 +54,6 @@ export default function TimeClock() {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
-  });
-
-  const time = new Date().toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: 'numeric'
   });
 
   return (
@@ -61,34 +65,29 @@ export default function TimeClock() {
           <br />
         
           <h3>{date}</h3>
-          <h4>{time}</h4>
+          <h4> <Clock /> </h4>
           
           <br />
-
-          <Button size="lg" variant="outline-success  mx-2" value={"clockIn"} onClick={ handleSubmit }>
-            Clock In
-          </Button>
-
+          { 
+          status.clockedIn === true ? 
           <Button size="lg" variant="outline-danger mx-2" value={"clockOut"} onClick={ handleSubmit }>
             Clock Out
           </Button>
-
-          <p>{ status }</p>
+          :
+          <Button size="lg" variant="outline-success  mx-2" value={"clockIn"} onClick={ handleSubmit }>
+            Clock In
+          </Button>
+          }
+          <p>{ message }</p>
         
         </Col>
-      
+          
         <Col>
         
-        <>
-        {
-           // total hours goes here
-           
-           // hours for logged in user are in user.hours
-           
-           // warning - check to make sure user.hours is not null because
-           // it will be null on first render 
 
-        }
+        
+        <>
+        
         </>
         
         </Col>

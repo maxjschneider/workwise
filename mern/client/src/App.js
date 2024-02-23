@@ -3,7 +3,7 @@ import React from 'react';
 import { Route, Routes } from "react-router-dom"
 
 // import components here
-import SiteNav from './components/navbar';
+import SiteNav from './components/utils/navbar';
 import Schedule from './components/schedule';
 import StaffDirectory from './components/staffdirectory';
 import Register from './components/register';

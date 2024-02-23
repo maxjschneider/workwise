@@ -26,6 +26,21 @@ export const clockOut = async () => {
     })
 };
 
+export const isClockedIn = async () => {
+    const user_id = window.getState().session.userId;
+  
+    const response = await fetch(process.env.REACT_APP_HOSTNAME + '/api/users/' + user_id, {
+      method: "GET",
+      headers: headers,
+      credentials: "include"
+      }
+    );
+  
+    const user = await response.json();
+
+    return user;
+}
+
 export const getUser = async () => {
     const user_id = window.getState().session.userId;
   
@@ -41,16 +56,31 @@ export const getUser = async () => {
     return user;
 }
 
-export const getUserTotalHours = async () => {
+// hours, isclockedin, and shifts 
+export const getUserStatus = async () => {
     const user_id = window.getState().session.userId;
   
-    const response = await fetch(process.env.REACT_APP_HOSTNAME + "/api/users/hours/" + user_id, {
+    const response = await fetch(process.env.REACT_APP_HOSTNAME + "/api/users/status/" + user_id, {
       method: "GET",
       headers: headers,
       credentials:"include"
     });
 
-    const hours = await response.json();
+    const status = await response.json();
 
-    return hours;
+    return status;
+};
+
+// to change day to monday, update = { day : "Monday" }
+export const updateUserScheduleEntry = async (_id, update) => {
+  const response = await fetch(process.env.REACT_APP_HOSTNAME + "/api/schedule/update", {
+    method: "POST",
+    body: JSON.stringify({ _id: _id, update: update}),
+    headers: headers,
+    credentials:"include"
+  });
+
+  const status = await response.json();
+
+  return status;
 };

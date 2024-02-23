@@ -45,8 +45,6 @@ scheduleRouter.post("/clockout", async (req, res) => {
         const currentShift = 
             await ShiftEntry.findOne({user_id: user_id, end: new Date("1975-11-11T11:11:11.111+00:00")});
 
-
-            console.log(currentShift);
         if (currentShift == null)  {
             res.send(JSON.stringify("User is not clocked in."));
             return;
