@@ -4,9 +4,7 @@ import session from "express-session";
 import connectStore from "connect-mongo";
 import cors from "cors"
 
-import { userRouter } from './routes/index.js';
-import { scheduleRouter } from './routes/index.js';
-import { sessionRouter } from './routes/index.js';
+import { userRouter, scheduleRouter, sessionRouter, timeclockRouter } from './routes/index.js';
 
 import "./loadEnvironment.mjs";
 
@@ -57,6 +55,7 @@ const SESS_LIFETIME = process.env.SESS_LIFETIME;
     apiRouter.use('/users', userRouter);   
     apiRouter.use('/schedule', scheduleRouter);   
     apiRouter.use('/session', sessionRouter); 
+    apiRouter.use('/timeclock', timeclockRouter); 
 
     app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
   } catch (err) {

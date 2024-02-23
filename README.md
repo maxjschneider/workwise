@@ -11,6 +11,9 @@ Our primary focus is on employee scheduling. Businesses desire an intuitive and 
 Beyond just scheduling, WorkWise will also be designed to handle taxes, employee files, shift approvals, time-off requests, and much more. 
 
 ## Initial Setup 
+Prerequisites: 
+- Node.js v20.11.1 LTS 
+
 Install Server Packages:
 ```
 cd mern/server

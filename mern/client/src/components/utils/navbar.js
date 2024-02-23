@@ -2,12 +2,11 @@ import React from "react"
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import logo from "../images/transparent_logo.png"
+import logo from "../../images/transparent_logo.png"
 import Button from 'react-bootstrap/Button';
 
 import { connect } from "react-redux";
-import { logout } from "../actions/session";
-import PrivateRoutes from "../util/route"
+import { logout } from "../../actions/session";
 
 import { Person } from 'react-bootstrap-icons';
 import { LinkContainer } from 'react-router-bootstrap'
@@ -43,6 +42,12 @@ const SiteNav = ({loggedIn, logout}) => {
                 <Nav >
                   <LinkContainer className="text-dark" to="/staffdirectory">
                     <Nav.Link>Staff Directory</Nav.Link>
+                  </LinkContainer>
+                </Nav>
+
+                <Nav >
+                  <LinkContainer className="text-dark" to="/timeclock">
+                    <Nav.Link>Timeclock</Nav.Link>
                   </LinkContainer>
                 </Nav>
 
