@@ -3,6 +3,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import Modal from 'react-bootstrap/Modal'; 
 import Button from 'react-bootstrap/Button'; 
 
+import { updateUserScheduleEntry } from "../util/user";
+
 const getTime = (dateString) => {
     return new Date(dateString).toLocaleTimeString("en-US", { hour:"numeric", minute:"2-digit", timeZone:"UTC" });
 }
@@ -12,6 +14,12 @@ function EditButton(props) {
   
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        
+        updateUserScheduleEntry(props.entry._id, {day : "Tuesday"});
+    }  
   
     return (
       <>
@@ -27,19 +35,19 @@ function EditButton(props) {
           <Modal.Header closeButton>
             <Modal.Title>Schedule</Modal.Title>
           </Modal.Header>
-          <Modal.Body>{props.edit}</Modal.Body>
+          <Modal.Body>{props.entry._id}</Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleClose}>
+            <Button variant="primary" onClick={handleSubmit}>
               Save Changes
             </Button>
           </Modal.Footer>
         </Modal>
       </>
     );
-  }  
+}  
 
 //pass in the entry._id data (time,etc) to the modal
 const ScheduleColumn = (props) => (
@@ -48,7 +56,7 @@ const ScheduleColumn = (props) => (
             <tbody> 
                 { props.entry.map((entry) => 
                     <tr key={entry._id}>
-                        {<EditButton edit={entry._id} />} 
+                        {<EditButton entry={entry} />} 
                         <td>
                             <h6 style={{fontSize:15}}>
                                 {entry.firstName + " " + entry.lastName}
@@ -130,7 +138,6 @@ export default function Schedule() {
                     <tr>
                         { 
                             schedule.map((entry, i) => {
-                                console.log(entry);
                                 return (
                                     <ScheduleColumn 
                                         key={i} 

@@ -70,3 +70,19 @@ export const getUserStatus = async () => {
 
     return status;
 };
+
+// to change day to monday, update = { day : "Monday" }
+export const updateUserScheduleEntry = async (_id, update) => {
+  const user_id = window.getState().session.userId;
+
+  const response = await fetch(process.env.REACT_APP_HOSTNAME + "/api/schedule/update", {
+    method: "POST",
+    body: JSON.stringify({ _id: _id, update: update}),
+    headers: headers,
+    credentials:"include"
+  });
+
+  const status = await response.json();
+
+  return status;
+};
