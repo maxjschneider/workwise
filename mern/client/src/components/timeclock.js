@@ -11,7 +11,7 @@ import { getUser, clockIn, clockOut, getUserStatus } from "../util/user"
 export default function TimeClock() {
   const [message, setMessage] = useState("");
   const [user, setUser] = useState(null);
-  const [status, setStatus] = useState({ hours: 0.0, clockedIn: false, shifts: [], shifts: [] });
+  const [status, setStatus] = useState({ hours: 0.0, clockedIn: false, shifts: [] });
   
   useEffect(() => {
     fetchData();
@@ -63,7 +63,7 @@ export default function TimeClock() {
           
           <br />
           { 
-          status.clockedIn == true ? 
+          status.clockedIn === true ? 
           <Button size="lg" variant="outline-danger mx-2" value={"clockOut"} onClick={ handleSubmit }>
             Clock Out
           </Button>

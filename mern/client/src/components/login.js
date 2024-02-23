@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { login } from "../actions/session";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Stack from 'react-bootstrap/Col';
+import Stack from 'react-bootstrap/Stack';
 
 const mapStateToProps = ({ errors }) => ({
   errors
