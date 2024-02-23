@@ -54,7 +54,7 @@ const Login = ({ errors, login }) => {
             <br/>
             <Link to="/register">Don't have an account?</Link>
 
-          </Form>
+        </Form>
 
       </Stack>
     </>

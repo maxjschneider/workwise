@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import "bootstrap/dist/css/bootstrap.css";
 import Modal from 'react-bootstrap/Modal'; 
 import Button from 'react-bootstrap/Button'; 
+import Form from 'react-bootstrap/Form';
 
 import { updateUserScheduleEntry } from "../util/user";
 
@@ -17,8 +18,10 @@ function EditButton(props) {
 
     const handleSubmit = e => {
         e.preventDefault();
+
+        console.log(e.target[0].value)
         
-        updateUserScheduleEntry(props.entry._id, {day : "Tuesday"});
+        //updateUserScheduleEntry(props.entry._id, {day : "Tuesday"});
     }  
   
     return (
@@ -37,12 +40,27 @@ function EditButton(props) {
           </Modal.Header>
           <Modal.Body>{props.entry._id}</Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
+
+          <Form onSubmit={handleSubmit}>
+
+            <Form.Group className="mb-3" controlId="email">
+                <Form.Select defaultValue={"Monday"}>
+                        <option>Open this select menu</option>
+                        <option value="Monday">Monday</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                </Form.Select>
+            </Form.Group>
+
+            <Button variant="secondary mx-2" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={handleSubmit}>
-              Save Changes
+
+            <Button variant="primary" type="submit">
+            Save Changes
             </Button>
+
+        </Form>
           </Modal.Footer>
         </Modal>
       </>
