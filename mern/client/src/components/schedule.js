@@ -3,10 +3,17 @@ import "bootstrap/dist/css/bootstrap.css";
 import Modal from 'react-bootstrap/Modal'; 
 import Button from 'react-bootstrap/Button'; 
 import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import { updateUserScheduleEntry } from "../util/user";
 
 const getTime = (dateString) => {
+    return new Date(dateString).toLocaleTimeString("en-US", { hour:"numeric", minute:"2-digit", timeZone:"UTC" });
+}
+
+// figure this out
+const getMilitaryTime = (dateString) => {
     return new Date(dateString).toLocaleTimeString("en-US", { hour:"numeric", minute:"2-digit", timeZone:"UTC" });
 }
 
@@ -41,27 +48,43 @@ function EditButton(props) {
           <Modal.Body>{props.entry._id}</Modal.Body>
           <Modal.Footer>
 
-          <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
 
-            <Form.Group className="mb-3" controlId="email">
-                <Form.Select defaultValue={"Monday"}>
-                        <option>Open this select menu</option>
+                <Form.Group className="mb-3" controlId="day">
+                    <Form.Select defaultValue={"Monday"}>
                         <option value="Monday">Monday</option>
                         <option value="2">Two</option>
                         <option value="3">Three</option>
-                </Form.Select>
-            </Form.Group>
+                    </Form.Select>
+                </Form.Group>
 
-            <Button variant="secondary mx-2" onClick={handleClose}>
-              Close
-            </Button>
+                <Row xs={4}>
+                    <Form.Group as={Col} controlId="startTimeHours">
+                        <Form.Label>Start Time</Form.Label>
+                        <Form.Control type="text" placeholder={getMilitaryTime(props.entry.start)} />
+                    </Form.Group>
 
-            <Button variant="primary" type="submit">
-            Save Changes
-            </Button>
+                    <Form.Group as={Col} controlId="startTimeMinutes">
+                        <Form.Label>End Time</Form.Label>
+                        <Form.Control type="text" placeholder={getMilitaryTime(props.entry.start)} />
+                    </Form.Group>
+                </Row>
 
-        </Form>
-          </Modal.Footer>
+                <p className="my-2"><i>Times must be inputted in 24 hour time.</i></p>
+                    
+                <br />
+
+                <Button variant="secondary mx-2" onClick={handleClose}>
+                Close
+                </Button>
+
+                <Button variant="primary" type="submit">
+                Save Changes
+                </Button>
+
+            </Form>
+
+        </Modal.Footer>
         </Modal>
       </>
     );
