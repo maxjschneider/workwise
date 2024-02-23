@@ -26,15 +26,23 @@ function EditButton(props) {
 
     const handleSubmit = e => {
         e.preventDefault();
-        
-        var start = new Date("01/01/1970 " + e.target[1].value);
-        var end = new Date("01/01/1970 " + e.target[2].value);  
-        console.log(start);  
-        console.log(end);
-        
 
-        //updateUserScheduleEntry(props.entry._id, {start : start});   use this after a conditional to check for invalid date
-        //updateUserScheduleEntry(props.entry._id, {day : "Tuesday"}); to be used later
+        var day = e.target[0].value; 
+        var start = new Date("01/01/1970 " + e.target[1].value);
+        var end = new Date("01/01/1970 " + e.target[2].value);
+
+        start.setHours(start.getHours() - 5);
+        end.setHours(end.getHours() - 5);
+        
+        if ( start !== "Invalid date") {
+            updateUserScheduleEntry(props.entry._id, {start : start});
+        }
+
+        if ( end !== "Invalid date") {
+            updateUserScheduleEntry(props.entry._id, {end : end});
+        }
+
+        updateUserScheduleEntry(props.entry._id, {day : day});
     }  
   
     return (
