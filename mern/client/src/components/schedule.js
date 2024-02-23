@@ -42,15 +42,17 @@ function EditButton(props) {
           <Modal.Footer>
 
           <Form onSubmit={handleSubmit}>
-
-            <Form.Group className="mb-3" controlId="email">
-                <Form.Select defaultValue={"Monday"}>
-                        <option>Open this select menu</option>
-                        <option value="Monday">Monday</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                </Form.Select>  
-            </Form.Group>
+            
+            <div>
+                <Form.Group className="mb-3" controlId="email">
+                    <Form.Select defaultValue={"Monday"}>
+                            <option>Open this select menu</option>
+                            <option value="Monday">Monday</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                    </Form.Select>  
+                </Form.Group>
+            </div>
 
             <Button variant="secondary mx-2" onClick={handleClose}>
               Close
