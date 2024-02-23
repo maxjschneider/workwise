@@ -96,15 +96,20 @@ const ScheduleColumn = (props) => (
         <table> 
             <tbody> 
                 { props.entry.map((entry) => 
-                    <tr key={entry._id}>
-                        {<EditButton entry={entry} />} 
+                    <tr key={entry._id}> 
                         <td>
-                            <h6 style={{fontSize:15}}>
-                                {entry.firstName + " " + entry.lastName}
-                                <br/> (<i>{entry.position}</i>)
-                            </h6>
-                            
-                            { getTime(entry.start) } - { getTime(entry.end) }
+                            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start'}}>
+                                {/* Left side of the container */}
+                                <div>
+                                    <h6 style={{fontSize: 15, margin: 0}}>
+                                        {entry.firstName + " " + entry.lastName}
+                                        <br/> (<i>{entry.position}</i>)
+                                    </h6>
+                                    {getTime(entry.start)} - {getTime(entry.end)}
+                                </div>
+                                {/* Right side of the container */}
+                                <EditButton entry={entry}/>
+                            </div>
                         </td>
                     </tr>
                 )}
