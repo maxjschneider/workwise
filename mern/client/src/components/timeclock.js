@@ -50,11 +50,6 @@ export default function TimeClock() {
     day: 'numeric'
   });
 
-  const time = new Date().toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: 'numeric'
-  });
-
   return (
     <Container style={{textAlign: "center"}}>
       <Row className="align-items-center">
@@ -64,7 +59,7 @@ export default function TimeClock() {
           <br />
         
           <h3>{date}</h3>
-          <h4><Clock /></h4>
+          <h4> <Clock /> </h4>
           
           <br />
           { 

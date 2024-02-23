@@ -10,7 +10,7 @@ export default function Clock() {
     const minute = (dateObject.getMinutes() < 10 ? "0" : "") + dateObject.getMinutes();
     const second = (dateObject.getSeconds() < 10 ? "0" : "") + dateObject.getSeconds();
   
-    const currentTime = hour + ' : ' + minute + ' : ' + second
+    const currentTime = hour + ":" + minute + ":" + second
     
     setTime(currentTime);
   }
