@@ -7,8 +7,8 @@ export default function Clock() {
     const dateObject = new Date()
   
     const hour = (dateObject.getHours() + 24) % 12 || 12
-    const minute = dateObject.getMinutes()
-    const second = dateObject.getSeconds()
+    const minute = (dateObject.getMinutes() < 10 ? "0" : "") + dateObject.getMinutes();
+    const second = (dateObject.getSeconds() < 10 ? "0" : "") + dateObject.getSeconds();
   
     const currentTime = hour + ' : ' + minute + ' : ' + second
     
