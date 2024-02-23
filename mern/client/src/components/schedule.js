@@ -14,8 +14,9 @@ const getTime = (dateString) => {
 
 // figure this out
 const getMilitaryTime = (dateString) => {
-    return new Date(dateString).toLocaleTimeString("en-US", { hour:"numeric", minute:"2-digit", timeZone:"UTC" });
+    return new Date(dateString).toLocaleTimeString("en-GB", { hour:"numeric", minute:"2-digit", timeZone:"UTC" });
 }
+
 
 function EditButton(props) {
     const [show, setShow] = useState(false);
@@ -25,10 +26,15 @@ function EditButton(props) {
 
     const handleSubmit = e => {
         e.preventDefault();
-
-        console.log(e.target[0].value)
         
-        //updateUserScheduleEntry(props.entry._id, {day : "Tuesday"});
+        var start = new Date("01/01/1970 " + e.target[1].value);
+        var end = new Date("01/01/1970 " + e.target[2].value);  
+        console.log(start);  
+        console.log(end);
+        
+
+        //updateUserScheduleEntry(props.entry._id, {start : start});   use this after a conditional to check for invalid date
+        //updateUserScheduleEntry(props.entry._id, {day : "Tuesday"}); to be used later
     }  
   
     return (
@@ -53,8 +59,12 @@ function EditButton(props) {
                 <Form.Group className="mb-3" controlId="day">
                     <Form.Select defaultValue={"Monday"}>
                         <option value="Monday">Monday</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
                     </Form.Select>
                 </Form.Group>
 
@@ -66,10 +76,10 @@ function EditButton(props) {
 
                     <Form.Group as={Col} controlId="startTimeMinutes">
                         <Form.Label>End Time</Form.Label>
-                        <Form.Control type="text" placeholder={getMilitaryTime(props.entry.start)} />
+                        <Form.Control type="text" placeholder={getMilitaryTime(props.entry.end)} />
                     </Form.Group>
                 </Row>
-
+                
                 <p className="my-2"><i>Times must be inputted in 24 hour time.</i></p>
                     
                 <br />
