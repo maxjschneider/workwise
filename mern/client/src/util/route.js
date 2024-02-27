@@ -1,16 +1,12 @@
-import { Navigate, Outlet } from 'react-router-dom'
+import { Navigate, Outlet } from "react-router-dom";
 import { connect } from "react-redux";
 
-const mapStateToProps = ({ session: { userId} }) => ({
-    loggedIn: Boolean(userId)
+const mapStateToProps = ({ session: { userId } }) => ({
+  loggedIn: Boolean(userId),
 });
 
 const Private = ({ loggedIn }) => {
-    return (
-      loggedIn ? <Outlet/> : <Navigate to='/login'/>
-    )
-}
+  return loggedIn ? <Outlet /> : <Navigate to="/login" />;
+};
 
-export default connect(
-    mapStateToProps
-)(Private);
+export default connect(mapStateToProps)(Private);
