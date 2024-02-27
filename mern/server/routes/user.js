@@ -92,4 +92,27 @@ userRouter.get("/status/:id", async (req, res) => {
   }
 });
 
+userRouter.post("/update", async (req, res) => {
+  try {
+      if (req.session.user.level !== 2) 
+        throw new Error("User not authenticated!");
+
+      const { _id, update } = req.body;
+
+      const user = 
+          await User.findOne({ _id: _id });
+
+      if (user == null)  {
+          res.send(JSON.stringify("User not found."));
+          return;
+      }
+
+      await user.updateOne(update);
+
+      res.send(JSON.stringify("User successfully updated!"));
+  } catch (err) {
+      res.status(400).send(parseError(err.message));
+  }
+});
+
 export default userRouter;

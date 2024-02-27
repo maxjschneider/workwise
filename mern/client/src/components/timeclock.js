@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import "bootstrap/dist/css/bootstrap.css";
 
 import Clock from "./utils/clock"
-import { getUser, clockIn, clockOut, getUserStatus } from "../util/user"
+import { clockIn, clockOut, getUserStatus } from "../util/user"
 
 const getTime = (dateString) => {
   var d = new Date(dateString);
@@ -17,7 +17,6 @@ const getTime = (dateString) => {
 
 export default function TimeClock() {
   const [message, setMessage] = useState("");
-  const [user, setUser] = useState(null);
   const [status, setStatus] = useState({ hours: 0.0, clockedIn: false, shifts: [] });
   
   useEffect(() => {
@@ -25,10 +24,8 @@ export default function TimeClock() {
   }, []);
 
   async function fetchData() {
-    const sessionUser = await getUser();
     const status = await getUserStatus();
     
-    setUser(sessionUser);
     setStatus(status);
   }
 
@@ -40,8 +37,6 @@ export default function TimeClock() {
             </h6>
         </td>
     </tr>
-                
-
 )
 
   const handleSubmit = async e => {
@@ -59,7 +54,7 @@ export default function TimeClock() {
       setMessage(result);
     }
 
-    setStatus(await getUserStatus()); 
+    await fetchData(); 
   }  
 
   const date = new Date().toLocaleDateString('en-US', {
@@ -73,7 +68,11 @@ export default function TimeClock() {
     <Container style={{textAlign: "center"}}>
       <Row className="align-items-center">
         <Col>
-          <h1>{ user == null ? "" : user.firstName + " " + user.lastName }</h1>
+          <h1>{ 
+              window.getState().session.firstName + 
+              " " + 
+              window.getState().session.lastName 
+            }</h1>
 
           <br />
         

@@ -84,3 +84,16 @@ export const updateUserScheduleEntry = async (_id, update) => {
 
   return status;
 };
+
+export const updateUser = async (_id, update) => {
+  const response = await fetch(process.env.REACT_APP_HOSTNAME + "/api/users/update", {
+    method: "POST",
+    body: JSON.stringify({ _id: _id, update: update}),
+    headers: headers,
+    credentials:"include"
+  })
+
+  const result = await response.json();
+  
+  return result;
+};

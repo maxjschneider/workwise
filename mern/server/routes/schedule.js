@@ -43,9 +43,6 @@ scheduleRouter.get("/day/:day", async (req, res) => {
 
 scheduleRouter.post("/update", async (req, res) => {
     try {
-        // update = { field_to_update : new_value }
-        // update = { day: "Monday" }
-
         const { _id, update } = req.body;
 
 
