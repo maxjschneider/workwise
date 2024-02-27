@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 
 import { updateUserScheduleEntry } from "../util/user";
@@ -196,7 +197,7 @@ export default function Schedule() {
   }
 
   return (
-    <div>
+    <div className="container-xxl">
       <table
         className="table table-striped table-bordered px-5"
         style={{ marginTop: 20 }}
