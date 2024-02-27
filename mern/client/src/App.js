@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes } from "react-router-dom";
 
 // import components here
-import SiteNav from './components/utils/navbar';
-import Schedule from './components/schedule';
-import StaffDirectory from './components/staffdirectory';
-import Register from './components/register';
-import Login from './components/login';
-import TimeClock from "./components/timeclock"
-import  PrivateRoutes  from './util/route';
+import SiteNav from "./components/utils/navbar";
+import Schedule from "./components/schedule";
+import StaffDirectory from "./components/staffdirectory";
+import Register from "./components/register";
+import Login from "./components/login";
+import TimeClock from "./components/timeclock";
+import PrivateRoutes from "./util/route";
 
 const App = () => {
   return (
@@ -19,15 +19,15 @@ const App = () => {
       <Routes>
         <Route element={<PrivateRoutes />}>
           <Route exact path="/schedule" element={<Schedule />} />
-          <Route exact path="/staffdirectory" element={<StaffDirectory />} /> 
-          <Route exact path="/timeclock" element={<TimeClock/>} /> 
+          <Route exact path="/staffdirectory" element={<StaffDirectory />} />
+          <Route exact path="/timeclock" element={<TimeClock />} />
         </Route>
-        
-        <Route exact path="/register" element={<Register />} />      
-        <Route exact path="/login" element={<Login />} />   
+
+        <Route exact path="/register" element={<Register />} />
+        <Route exact path="/login" element={<Login />} />
       </Routes>
     </div>
   );
-}
+};
 
 export default App;
