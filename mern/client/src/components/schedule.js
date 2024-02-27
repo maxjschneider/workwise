@@ -6,7 +6,6 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
 
 import { updateUserScheduleEntry } from "../util/user";
 
@@ -14,7 +13,6 @@ const getTime = (dateString) => {
     return new Date(dateString).toLocaleTimeString("en-US", { hour:"numeric", minute:"2-digit", timeZone:"UTC" });
 }
 
-// figure this out
 const getMilitaryTime = (dateString) => {
     return new Date(dateString).toLocaleTimeString("en-GB", { hour:"numeric", minute:"2-digit", timeZone:"UTC" });
 }
