@@ -1,19 +1,19 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const ShiftEntrySchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true
+    required: true,
   },
   start: {
     type: Date,
-    required: true
+    required: true,
   },
   end: {
     type: Date,
     required: true,
-    default: new Date("1975-11-11T11:11:11.111+00:00")
-  }
+    default: new Date("1975-11-11T11:11:11.111+00:00"),
+  },
 });
 
 const ShiftEntry = mongoose.model("shifts", ShiftEntrySchema, "shifts");

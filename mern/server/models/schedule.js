@@ -1,27 +1,31 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const ScheduleEntrySchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true
+    required: true,
   },
   day: {
     type: String,
-    required: true
+    required: true,
   },
   start: {
     type: Date,
-    required: true
+    required: true,
   },
   end: {
     type: Date,
-    required: true
+    required: true,
   },
   enabled: {
     type: Boolean,
-    required: true
-  }
+    required: true,
+  },
 });
 
-const ScheduleEntry = mongoose.model("schedule", ScheduleEntrySchema, "schedule");
+const ScheduleEntry = mongoose.model(
+  "schedule",
+  ScheduleEntrySchema,
+  "schedule"
+);
 export default ScheduleEntry;
