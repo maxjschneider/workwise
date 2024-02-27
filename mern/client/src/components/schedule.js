@@ -144,7 +144,6 @@ export default function Schedule() {
         var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
         for (let [i, day] of days.entries()) {
-
             const response = await fetch(process.env.REACT_APP_HOSTNAME + "/api/schedule/day/" + day, 
                 {headers: {"Access-Control-Allow-Origin": true}}
             );
@@ -195,27 +194,4 @@ export default function Schedule() {
             </table>
         </div>
     )
-
-
-    // useful for later
-    /*
-    async function insertEntry() {
-        const res = await fetch(HOSTNAME + "/api/schedule/", {
-            method: "POST", 
-            body: JSON.stringify({
-                user_id: "65c00cd36f2337b1c2302aea", 
-                day: "Tueday",
-                start: new Date("1970-01-01T08:30:00.000+00:00"), 
-                end: new Date("1970-01-01T12:30:00.000+00:00"),
-                enabled: true
-            }),
-            headers: {
-                "Access-Control-Allow-Origin": true,
-                "Content-Type": "application/json"
-            }
-        });
-
-        const resp = await res.json();
-        console.log(resp);
-    }*/
 }

@@ -57,7 +57,7 @@ function DeleteButton (props) {
   const handleSubmit = e => {
     e.preventDefault();
     
-    props.setShow({visible: true, message: "Error"});
+    // TODO: DELETE THE USER 
   }
 
   if (props.currentUser.level === 2) {
@@ -99,7 +99,6 @@ export default function StaffDirectory() {
     }
 
     return (
-
       <Container>
             <StatusAlert show={show} setShow={setShow} />
 
