@@ -46,11 +46,11 @@ npm start
 
 ## Formatting
 
-This repository is formatted with Prettify.
+This repository is formatted with Prettier.
 
 To install on VSCode:
 
-- Install the [Prettify VSCode extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- Install the [Prettier VSCode extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - Open VSCode settings, (COMMAND + ,) on macOS or (CTRL + ,) on Windows
 - Set `Editor: Default Formatter` to Prettier
 - (Optional) Enable `Editor: Format On Save`
