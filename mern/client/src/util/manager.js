@@ -17,3 +17,18 @@ export const getUnapprovedShifts = async () => {
   const result = await response.json();
   return result;
 };
+
+export const processShift = async (_id, approved) => {
+  const response = await fetch(
+    process.env.REACT_APP_HOSTNAME + "/api/timeclock/process",
+    {
+      method: "POSt",
+      body: JSON.stringify({ _id: _id, approved: approved }),
+      headers: headers,
+      credentials: "include",
+    }
+  );
+
+  const result = await response.json();
+  return result;
+};

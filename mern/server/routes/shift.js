@@ -110,4 +110,21 @@ timeclockRouter.get("/unapproved", async (req, res) => {
   }
 });
 
+timeclockRouter.post("/process", async (req, res) => {
+  try {
+    const { _id, approved } = req.body;
+    const entry = await ShiftEntry.findOne({ _id: _id });
+
+    if (approved) {
+      await entry.updateOne({ approved: true });
+    } else {
+      await entry.deleteOne();
+    }
+
+    res.send(JSON.stringify("Shift processed."));
+  } catch (err) {
+    res.status(400).send(parseError(err.message));
+  }
+});
+
 export default timeclockRouter;

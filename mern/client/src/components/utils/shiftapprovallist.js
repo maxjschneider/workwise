@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { getUnapprovedShifts } from "../../util/manager";
+import { getUnapprovedShifts, processShift } from "../../util/manager";
 import { getTime } from "../../util/timeConvert";
 import { Check } from "react-bootstrap-icons";
 import { X } from "react-bootstrap-icons";
@@ -14,8 +14,10 @@ export default function ShiftApprovalList() {
     setShifts(unapproved);
   };
 
-  const processShift = async (id, approved) => {
-    console.log(id + " " + approved);
+  const updateShift = async (id, approved) => {
+    processShift(id, approved).then(() => {
+      updateShifts();
+    });
   };
 
   useEffect(() => {
@@ -56,14 +58,14 @@ export default function ShiftApprovalList() {
                     <td className="d-flex justify-content-center align-items-center">
                       <button
                         className="btn btn-success col-3 mx-3"
-                        onClick={() => processShift(entry.user_id, true)}
+                        onClick={() => updateShift(entry._id, true)}
                       >
                         <Check />
                       </button>
 
                       <button
                         className="btn btn-danger col-3 mx-3"
-                        onClick={() => processShift(entry.user_id, false)}
+                        onClick={() => updateShift(entry._id, false)}
                       >
                         <X />
                       </button>
