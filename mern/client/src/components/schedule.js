@@ -5,26 +5,11 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
+import ShiftApprovalList from "./utils/shiftapprovallist";
 
 import { updateUserScheduleEntry } from "../util/user";
-
-const getTime = (dateString) => {
-  return new Date(dateString).toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    timeZone: "UTC",
-  });
-};
-
-const getMilitaryTime = (dateString) => {
-  return new Date(dateString).toLocaleTimeString("en-GB", {
-    hour: "numeric",
-    minute: "2-digit",
-    timeZone: "UTC",
-  });
-};
+import { getTime, getMilitaryTime } from "../util/timeConvert";
 
 function EditButton(props) {
   const [show, setShow] = useState(false);
@@ -198,6 +183,8 @@ export default function Schedule() {
 
   return (
     <div className="container-xxl">
+      <h1>Weekly Calendar</h1>
+
       <table
         className="table table-striped table-bordered px-5"
         style={{ marginTop: 20 }}
@@ -236,6 +223,10 @@ export default function Schedule() {
           </tr>
         </tbody>
       </table>
+
+      <h1 className="py-5">Recent Shifts</h1>
+
+      <ShiftApprovalList />
     </div>
   );
 }
