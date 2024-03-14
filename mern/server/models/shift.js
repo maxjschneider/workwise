@@ -14,6 +14,11 @@ const ShiftEntrySchema = new mongoose.Schema({
     required: true,
     default: new Date("1975-11-11T11:11:11.111+00:00"),
   },
+  approved: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 });
 
 const ShiftEntry = mongoose.model("shifts", ShiftEntrySchema, "shifts");

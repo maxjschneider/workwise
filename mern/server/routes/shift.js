@@ -1,10 +1,11 @@
 import express from "express";
 import ShiftEntry from "../models/shift.js";
+import User from "../models/user.js";
 import { parseError } from "../util/helpers.js";
 
-const scheduleRouter = express.Router();
+const timeclockRouter = express.Router();
 
-scheduleRouter.post("/clockin", async (req, res) => {
+timeclockRouter.post("/clockin", async (req, res) => {
   try {
     const { user_id } = req.body;
 
@@ -39,7 +40,7 @@ scheduleRouter.post("/clockin", async (req, res) => {
   }
 });
 
-scheduleRouter.post("/clockout", async (req, res) => {
+timeclockRouter.post("/clockout", async (req, res) => {
   try {
     const { user_id } = req.body;
 
@@ -67,11 +68,63 @@ scheduleRouter.post("/clockout", async (req, res) => {
   }
 });
 
-scheduleRouter.get("/day/:day", async (req, res) => {
+timeclockRouter.get("/day/:day", async (req, res) => {
   const targetDay = req.params.day;
   const result = await ScheduleEntry.find({ day: targetDay });
 
   res.send(result).status(200);
 });
 
-export default scheduleRouter;
+timeclockRouter.get("/unapproved", async (req, res) => {
+  try {
+    if (req.session.user.level < 1) {
+      throw new Error("Unauthorized request.");
+    }
+
+    const response = await ShiftEntry.find({
+      approved: false,
+      end: { $ne: new Date("1975-11-11T11:11:11.111+00:00") },
+    });
+
+    var result = [];
+
+    for (let i = 0; i < response.length; i++) {
+      const user = await User.findOne({
+        _id: response[i].user_id,
+      });
+
+      // make a deep copy because for some reason response is not modifiable??
+      // hack fix once again here copied from routes/schedule.js
+      let dict = JSON.parse(JSON.stringify(response[i]));
+
+      dict.firstName = user.firstName;
+      dict.lastName = user.lastName;
+      dict.hoursWorked = Math.abs(response[i].end - response[i].start) / 36e5;
+
+      result.push(dict);
+    }
+
+    res.send(result).status(200);
+  } catch (err) {
+    res.status(400).send(parseError(err.message));
+  }
+});
+
+timeclockRouter.post("/process", async (req, res) => {
+  try {
+    const { _id, approved } = req.body;
+    const entry = await ShiftEntry.findOne({ _id: _id });
+
+    if (approved) {
+      await entry.updateOne({ approved: true });
+    } else {
+      await entry.deleteOne();
+    }
+
+    res.send(JSON.stringify("Shift processed."));
+  } catch (err) {
+    res.status(400).send(parseError(err.message));
+  }
+});
+
+export default timeclockRouter;
