@@ -11,11 +11,12 @@ export default function ShiftApprovalList() {
   const updateShifts = async () => {
     const unapproved = await getUnapprovedShifts();
 
-    console.log(unapproved);
     setShifts(unapproved);
   };
 
-  const processShift = async (id, approved) => {};
+  const processShift = async (id, approved) => {
+    console.log(id + " " + approved);
+  };
 
   useEffect(() => {
     updateShifts();
@@ -53,11 +54,17 @@ export default function ShiftApprovalList() {
                     <td>{getTime(entry.start) + " - " + getTime(entry.end)}</td>
                     <td>{entry.hoursWorked.toFixed(3)}</td>
                     <td className="d-flex justify-content-center align-items-center">
-                      <button className="btn btn-success col-3 mx-3">
+                      <button
+                        className="btn btn-success col-3 mx-3"
+                        onClick={() => processShift(entry.user_id, true)}
+                      >
                         <Check />
                       </button>
 
-                      <button className="btn btn-danger col-3 mx-3">
+                      <button
+                        className="btn btn-danger col-3 mx-3"
+                        onClick={() => processShift(entry.user_id, false)}
+                      >
                         <X />
                       </button>
                     </td>
