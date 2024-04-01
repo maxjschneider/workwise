@@ -22,12 +22,23 @@ export const processShift = async (_id, approved) => {
   const response = await fetch(
     process.env.REACT_APP_HOSTNAME + "/api/timeclock/process",
     {
-      method: "POSt",
+      method: "POST",
       body: JSON.stringify({ _id: _id, approved: approved }),
       headers: headers,
       credentials: "include",
     }
   );
+
+  const result = await response.json();
+  return result;
+};
+
+export const getAllUsers = async () => {
+  const response = await fetch(process.env.REACT_APP_HOSTNAME + "/api/users", {
+    method: "GET",
+    headers: headers,
+    credentials: "include",
+  });
 
   const result = await response.json();
   return result;

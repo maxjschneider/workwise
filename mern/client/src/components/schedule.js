@@ -6,7 +6,9 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+
 import ShiftApprovalList from "./utils/shiftapprovallist";
+import ShiftEditor from "./utils/shiftByName";
 
 import { updateUserScheduleEntry } from "../util/user";
 import { getTime, getMilitaryTime } from "../util/timeConvert";
@@ -227,6 +229,8 @@ export default function Schedule() {
       <h1 className="py-5">Recent Shifts</h1>
 
       <ShiftApprovalList />
+
+      <ShiftEditor />
     </div>
   );
 }
