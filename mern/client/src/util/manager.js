@@ -43,3 +43,17 @@ export const getAllUsers = async () => {
   const result = await response.json();
   return result;
 };
+
+export const getUserShifts = async (id) => {
+  const response = await fetch(
+    process.env.REACT_APP_HOSTNAME + "/api/timeclock/user/" + id,
+    {
+      method: "GET",
+      headers: headers,
+      credentials: "include",
+    }
+  );
+
+  const result = await response.json();
+  return result;
+};

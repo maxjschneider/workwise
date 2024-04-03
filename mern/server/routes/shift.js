@@ -110,6 +110,23 @@ timeclockRouter.get("/unapproved", async (req, res) => {
   }
 });
 
+timeclockRouter.get("/user/:id", async (req, res) => {
+  try {
+    if (req.session.user.level < 1) {
+      throw new Error("Unauthorized request.");
+    }
+
+    const result = await ShiftEntry.find({
+      approved: true,
+      user_id: req.params.id,
+    });
+
+    res.send(result).status(200);
+  } catch (err) {
+    res.status(400).send(parseError(err.message));
+  }
+});
+
 timeclockRouter.post("/process", async (req, res) => {
   try {
     const { _id, approved } = req.body;
