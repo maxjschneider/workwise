@@ -57,3 +57,19 @@ export const getUserShifts = async (id) => {
   const result = await response.json();
   return result;
 };
+
+export const updateUserShiftEntry = async (_id, update) => {
+  const response = await fetch(
+    process.env.REACT_APP_HOSTNAME + "/api/timeclock/update",
+    {
+      method: "POST",
+      body: JSON.stringify({ _id: _id, update: update }),
+      headers: headers,
+      credentials: "include",
+    }
+  );
+
+  const status = await response.json();
+
+  return status;
+};

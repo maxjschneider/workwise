@@ -144,4 +144,23 @@ timeclockRouter.post("/process", async (req, res) => {
   }
 });
 
+timeclockRouter.post("/update", async (req, res) => {
+  try {
+    const { _id, update } = req.body;
+
+    const shift = await ShiftEntry.findOne({ _id: _id });
+
+    if (shift == null) {
+      res.send(JSON.stringify("Error, shift not found"));
+      return;
+    }
+
+    await shift.updateOne(update);
+
+    res.send(JSON.stringify("Shift updated successfully."));
+  } catch (err) {
+    res.status(400).send(parseError(err.message));
+  }
+});
+
 export default timeclockRouter;
