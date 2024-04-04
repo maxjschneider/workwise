@@ -226,11 +226,12 @@ export default function Schedule() {
         </tbody>
       </table>
 
-      <h1 className="py-5">Recent Shifts</h1>
-
-      <ShiftApprovalList />
-
-      <ShiftEditor />
+      {window.getState().session.level >= 1 ? (
+        <>
+          <ShiftApprovalList />
+          <ShiftEditor />
+        </>
+      ) : null}
     </div>
   );
 }

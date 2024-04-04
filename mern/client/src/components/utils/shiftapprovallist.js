@@ -26,6 +26,8 @@ export default function ShiftApprovalList() {
 
   return (
     <>
+      <h1 className="py-5">Recent Shifts</h1>
+
       <table
         className="table table-striped table-bordered px-5"
         style={{ marginTop: 20 }}
