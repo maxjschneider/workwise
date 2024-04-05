@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 // import components here
 import SiteNav from "./components/utils/navbar";
 import Schedule from "./components/schedule";
+import HomePage from "./components/home";
 import StaffDirectory from "./components/staffdirectory";
 import Register from "./components/register";
 import Login from "./components/login";
@@ -18,6 +19,7 @@ const App = () => {
       <div style={{ margin: 20 }}></div>
       <Routes>
         <Route element={<PrivateRoutes />}>
+          <Route exact path="/" element={<HomePage />} />
           <Route exact path="/schedule" element={<Schedule />} />
           <Route exact path="/staffdirectory" element={<StaffDirectory />} />
           <Route exact path="/timeclock" element={<TimeClock />} />
