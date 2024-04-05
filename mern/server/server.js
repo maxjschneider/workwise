@@ -9,6 +9,7 @@ import {
   scheduleRouter,
   sessionRouter,
   timeclockRouter,
+  annoucementRouter,
 } from "./routes/index.js";
 
 import "./loadEnvironment.mjs";
@@ -65,6 +66,7 @@ const SESS_LIFETIME = process.env.SESS_LIFETIME;
     apiRouter.use("/schedule", scheduleRouter);
     apiRouter.use("/session", sessionRouter);
     apiRouter.use("/timeclock", timeclockRouter);
+    apiRouter.use("/announcements", annoucementRouter);
 
     app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
   } catch (err) {
