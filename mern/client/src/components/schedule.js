@@ -10,8 +10,10 @@ import Col from "react-bootstrap/Col";
 import ShiftApprovalList from "./utils/shiftapprovallist";
 import ShiftEditor from "./utils/shiftByName";
 
-import { updateUserScheduleEntry } from "../util/user";
+import { createScheduleEntry, updateUserScheduleEntry, getUser } from "../util/user";
 import { getTime, getMilitaryTime } from "../util/timeConvert";
+
+const NULL_USER_ID = "6610a1894e824c674f940867";
 
 function EditButton(props) {
   const [show, setShow] = useState(false);
@@ -113,6 +115,117 @@ function EditButton(props) {
   );
 }
 
+function PostRoleButton() {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    var day = e.target[0].value;
+    var start = new Date("01/01/1970 " + e.target[1].value);
+    var end = new Date("01/01/1970 " + e.target[2].value);
+
+    start.setHours(start.getHours() - 5);
+    end.setHours(end.getHours() - 5);
+
+    if (start !== "Invalid date" && end !== "Invalid date") {
+      createScheduleEntry(NULL_USER_ID, day, start, end, true);
+    }
+
+  };
+  return (
+    <div>
+      <Button variant="primary"
+        onClick={handleShow}
+        style={{
+          fontSize: "20px",
+        }}>
+        Post
+      </Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Schedule</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="day">
+              <Form.Select defaultValue="" required>
+                <option value="" disabled>
+                  Please Select a Day
+                </option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+              </Form.Select>
+            </Form.Group>
+
+            <Row xs={4}>
+              <Form.Group as={Col} controlId="startTimeHours">
+                <Form.Label>Start Time</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder={"0:00"}
+                />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="startTimeMinutes">
+                <Form.Label>End Time</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder={"0:00"}
+                />
+              </Form.Group>
+            </Row>
+
+            <p className="my-2">
+              <i>Times must be inputted in 24 hour time.</i>
+            </p>
+
+            <br />
+
+            <Button variant="secondary mx-2" onClick={handleClose}>
+              Close
+            </Button>
+
+            <Button variant="primary" type="submit">
+              Save Changes
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+    </div>)
+}
+
+function AcceptShiftButton(props) {
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const id = await getUser();
+    updateUserScheduleEntry(props._id, { user_id: id._id });
+    props.fetchData();
+  };
+
+  return (
+    <Button variant="primary"
+      onClick={handleSubmit}
+      style={{
+        borderRadius: "8px",
+        fontSize: "12px",
+        padding: "4px 8px",
+      }}>
+      Sign Up
+    </Button>
+  );
+}
+
 const ScheduleColumn = (props) => (
   <td>
     <table>
@@ -130,10 +243,24 @@ const ScheduleColumn = (props) => (
                 {/* Left side of the container */}
                 <div>
                   <h6 style={{ fontSize: 15, margin: 0 }}>
-                    {entry.firstName + " " + entry.lastName}
-                    <br /> (<i>{entry.position}</i>)
+                    {entry.user_id.toString() === NULL_USER_ID ? (
+                    <>
+                      {"Open Shift:"}
+                      <br />
+                    </>
+                    ): 
+                    <>
+                        {entry.firstName + " " + entry.lastName}
+                        <br /> (<i>{entry.position}</i>)
+                    </>}
                   </h6>
                   {getTime(entry.start)} - {getTime(entry.end)}
+                  <br />
+                  {entry.user_id.toString() === NULL_USER_ID ? (
+                    <>
+                      <AcceptShiftButton _id={entry._id} fetchData={props.fetchData}/>
+                    </>
+                    ): null}
                 </div>
                 {/* Right side of the container */}
                 <EditButton entry={entry} />
@@ -185,7 +312,18 @@ export default function Schedule() {
 
   return (
     <div className="container-xxl">
-      <h1>Weekly Calendar</h1>
+      <div style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}>
+        <h1>Weekly Calendar</h1>
+        {window.getState().session.level >= 1 ? (
+          <>
+            <PostRoleButton/>
+          </>
+        ) : null}
+      </div>
 
       <table
         className="table table-striped table-bordered px-5"
@@ -220,7 +358,7 @@ export default function Schedule() {
         <tbody>
           <tr>
             {schedule.map((entry, i) => {
-              return <ScheduleColumn key={i} entry={entry} />;
+              return <ScheduleColumn key={i} entry={entry} fetchData={fetchData}/>;
             })}
           </tr>
         </tbody>

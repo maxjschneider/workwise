@@ -4,6 +4,8 @@ import User from "../models/user.js";
 
 import { parseError } from "../util/helpers.js";
 
+const NULL_USER_ID = "6610a1894e824c674f940867";
+
 const scheduleRouter = express.Router();
 
 scheduleRouter.post("", async (req, res) => {
@@ -24,16 +26,15 @@ scheduleRouter.get("/day/:day", async (req, res) => {
   var response = await ScheduleEntry.find({ day: targetDay });
 
   var result = [];
-
   for (let i = 0; i < response.length; i++) {
     const user = await User.findOne({ _id: response[i].user_id });
-
     // make a deep copy because for some reason response is not modifiable??
     let dict = JSON.parse(JSON.stringify(response[i]));
-
-    dict.firstName = user.firstName;
-    dict.lastName = user.lastName;
-    dict.position = user.position;
+    if (response[i].user_id.toString() !== NULL_USER_ID) {
+      dict.firstName = user.firstName;
+      dict.lastName = user.lastName;
+      dict.position = user.position;
+    }
 
     result.push(dict);
   }

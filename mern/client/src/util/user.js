@@ -95,6 +95,23 @@ export const updateUserScheduleEntry = async (_id, update) => {
   return status;
 };
 
+// to post roles 
+export const createScheduleEntry = async (user_id, day, start, end) => {
+  const response = await fetch(
+    process.env.REACT_APP_HOSTNAME + "/api/schedule",
+    {
+      method: "POST",
+      body: JSON.stringify({ user_id: user_id, day: day, start: start, end: end, enabled: true}),
+      headers: headers,
+      credentials: "include",
+    }
+  );
+
+  const status = await response.json();
+
+  return status;
+};
+
 export const updateUser = async (_id, update) => {
   const response = await fetch(
     process.env.REACT_APP_HOSTNAME + "/api/users/update",
