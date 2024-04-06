@@ -41,6 +41,7 @@ function EditButton(props) {
     }
 
     updateUserScheduleEntry(props.entry._id, { day: day });
+    props.fetchData();
   };
 
   return (
@@ -116,7 +117,7 @@ function EditButton(props) {
   );
 }
 
-function PostRoleButton() {
+function PostRoleButton(props) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -135,6 +136,8 @@ function PostRoleButton() {
     if (start !== "Invalid date" && end !== "Invalid date") {
       createScheduleEntry(NULL_USER_ID, day, start, end, true);
     }
+    handleClose();
+    props.fetchData();
 
   };
   return (
@@ -262,7 +265,7 @@ const ScheduleColumn = (props) => (
                     </>}
                 </div>
                 {/* Right side of the container */}
-                <EditButton entry={entry} />
+                <EditButton entry={entry} fetchData={props.fetchData}/>
               </div>
             </td>
           </tr>
@@ -319,7 +322,7 @@ export default function Schedule() {
         <h1>Weekly Calendar</h1>
         {window.getState().session.level >= 1 ? (
           <>
-            <PostRoleButton/>
+            <PostRoleButton fetchData={fetchData}/>
           </>
         ) : null}
       </div>
