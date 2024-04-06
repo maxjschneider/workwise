@@ -13,6 +13,7 @@ import ShiftEditor from "./utils/shiftByName";
 import { createScheduleEntry, updateUserScheduleEntry, getUser } from "../util/user";
 import { getTime, getMilitaryTime } from "../util/timeConvert";
 
+// TODO: questionable, fix later, pushed to git so repo knows puesdo user.
 const NULL_USER_ID = "6610a1894e824c674f940867";
 
 function EditButton(props) {
@@ -242,25 +243,23 @@ const ScheduleColumn = (props) => (
               >
                 {/* Left side of the container */}
                 <div>
-                  <h6 style={{ fontSize: 15, margin: 0 }}>
                     {entry.user_id.toString() === NULL_USER_ID ? (
                     <>
-                      {"Open Shift:"}
-                      <br />
+                      <h6 style={{ fontSize: 15, margin: 0 }}>
+                        {"Open Shift:"}
+                        <br />
+                      </h6>
+                      {getTime(entry.start)} - {getTime(entry.end)}
+                      <AcceptShiftButton _id={entry._id} fetchData={props.fetchData}/>
                     </>
                     ): 
                     <>
+                      <h6 style={{ fontSize: 15, margin: 0 }}>
                         {entry.firstName + " " + entry.lastName}
-                        <br /> (<i>{entry.position}</i>)
+                        <br /> (<i>{entry.position}</i>) <br />
+                      </h6>
+                      {getTime(entry.start)} - {getTime(entry.end)}
                     </>}
-                  </h6>
-                  {getTime(entry.start)} - {getTime(entry.end)}
-                  <br />
-                  {entry.user_id.toString() === NULL_USER_ID ? (
-                    <>
-                      <AcceptShiftButton _id={entry._id} fetchData={props.fetchData}/>
-                    </>
-                    ): null}
                 </div>
                 {/* Right side of the container */}
                 <EditButton entry={entry} />

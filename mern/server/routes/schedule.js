@@ -30,6 +30,7 @@ scheduleRouter.get("/day/:day", async (req, res) => {
     const user = await User.findOne({ _id: response[i].user_id });
     // make a deep copy because for some reason response is not modifiable??
     let dict = JSON.parse(JSON.stringify(response[i]));
+    // account for the "null" user in role postings
     if (response[i].user_id.toString() !== NULL_USER_ID) {
       dict.firstName = user.firstName;
       dict.lastName = user.lastName;
