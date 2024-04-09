@@ -115,6 +115,7 @@ export default function StaffDirectory() {
             <th>Last</th>
             <th>Level</th>
             <th>Email</th>
+            <th>Phone Number</th>
             {currentUser.level === 2 ? <th></th> : null}
           </tr>
         </thead>
@@ -133,6 +134,7 @@ export default function StaffDirectory() {
                   />
                 </td>
                 <td>{entry.email}</td>
+                <td>{entry.phoneNumber}</td>
                 {currentUser.level === 2 ? (
                   <td>
                     <DeleteButton

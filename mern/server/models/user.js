@@ -27,6 +27,10 @@ const UserSchema = new mongoose.Schema(
         message: "Email already exists",
       },
     },
+    phoneNumber: {
+      type: Number,
+      required: false,
+    },
     password: {
       type: String,
       required: true,
