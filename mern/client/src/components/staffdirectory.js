@@ -76,8 +76,12 @@ function DeleteButton(props) {
 }
 
 function addNum(props) {
-  const enteredName = prompt('Please enter your 10 digit phone number with no spaces')
-  console.log(enteredName)
+  const enteredNumber = prompt('Please enter your 10 digit phone number with no spaces')
+  
+  
+  console.log(enteredNumber)
+
+
 }
 export default function StaffDirectory() {
   const [staffList, setStaffList] = useState([]);
