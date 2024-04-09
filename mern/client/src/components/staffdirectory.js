@@ -76,11 +76,14 @@ function DeleteButton(props) {
 }
 
 function addNum(props) {
+  const validNumber = new RegExp("[0-9]{10}$")
   const enteredNumber = prompt('Please enter your 10 digit phone number with no spaces')
-  
-  
-  console.log(enteredNumber)
-
+  if(!validNumber.test(enteredNumber)){
+    alert("Invalid number! Please try again!")
+  }
+  else{
+    console.log(enteredNumber)
+  }
 
 }
 export default function StaffDirectory() {
