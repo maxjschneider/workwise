@@ -53,7 +53,7 @@ const SESS_LIFETIME = process.env.SESS_LIFETIME;
         }),
         cookie: {
           sameSite: true,
-          secure: false,
+          secure: true,
           maxAge: parseInt(SESS_LIFETIME),
           path: "/",
         },
