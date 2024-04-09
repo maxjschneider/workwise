@@ -75,6 +75,10 @@ function DeleteButton(props) {
   }
 }
 
+function addNum(props) {
+  const enteredName = prompt('Please enter your 10 digit phone number with no spaces')
+  console.log(enteredName)
+}
 export default function StaffDirectory() {
   const [staffList, setStaffList] = useState([]);
   const [currentUser, setCurrentUser] = useState([]);
@@ -134,7 +138,20 @@ export default function StaffDirectory() {
                   />
                 </td>
                 <td>{entry.email}</td>
-                <td>{entry.phoneNumber}</td>
+                <td>{entry.phoneNumber}
+                
+                <Button
+                variant="primary"
+                onClick={addNum}
+                style={{
+                  borderRadius: "10px",
+                  padding: "3px 4px",
+                  fontSize: "10px",
+                }}
+                >add
+              </Button>
+                
+                </td>
                 {currentUser.level === 2 ? (
                   <td>
                     <DeleteButton
