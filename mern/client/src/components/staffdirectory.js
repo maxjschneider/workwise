@@ -76,15 +76,16 @@ function DeleteButton(props) {
 }
 
 function addNum(props) {
-  const validNumber = new RegExp("[0-9]{10}$")
-  const enteredNumber = prompt('Please enter your 10 digit phone number with no spaces')
-  if(!validNumber.test(enteredNumber)){
-    alert("Invalid number! Please try again!")
+  const validNumber = new RegExp("[0-9]{10}$");
+  const enteredNumber = prompt(
+    "Please enter your 10 digit phone number with no spaces"
+  );
+  if (!validNumber.test(enteredNumber)) {
+    alert("Invalid number! Please try again!");
+  } else {
+    console.log(enteredNumber);
+    updateUser(props.user._id, { phoneNumber: enteredNumber });
   }
-  else{
-    console.log(enteredNumber)
-  }
-
 }
 export default function StaffDirectory() {
   const [staffList, setStaffList] = useState([]);
@@ -145,19 +146,20 @@ export default function StaffDirectory() {
                   />
                 </td>
                 <td>{entry.email}</td>
-                <td>{entry.phoneNumber}
-                
-                <Button
-                variant="primary"
-                onClick={addNum}
-                style={{
-                  borderRadius: "10px",
-                  padding: "3px 4px",
-                  fontSize: "10px",
-                }}
-                >add
-              </Button>
-                
+                <td>
+                  {entry.phoneNumber}
+
+                  <Button
+                    variant="primary"
+                    onClick={() => addNum({ user: entry })}
+                    style={{
+                      borderRadius: "10px",
+                      padding: "3px 4px",
+                      fontSize: "10px",
+                    }}
+                  >
+                    add
+                  </Button>
                 </td>
                 {currentUser.level === 2 ? (
                   <td>
