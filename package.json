@@ -4,6 +4,11 @@
   "description": "WorkWise seeks to provide an all-encompassing software solution to workplace management. We aim to be the go-to platform for any business seeking a comprehensive, user-friendly, and efficient tool to manage their workplace.",
   "main": "index.js",
   "scripts": {
+    "install-server": "cd mern/server && npm install",
+    "start-server": "cd mern/server && node server.js",
+    "install-client": "cd mern/client && npm install",
+    "build-client": "cd mern/client && npm run build",
+    "start-client": "cd mern/client && npm run start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
