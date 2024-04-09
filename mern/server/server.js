@@ -52,7 +52,7 @@ const SESS_LIFETIME = process.env.SESS_LIFETIME;
           ttl: parseInt(SESS_LIFETIME) / 1000,
         }),
         cookie: {
-          sameSite: true,
+          sameSite: "none",
           secure: true,
           maxAge: parseInt(SESS_LIFETIME),
           path: "/",
