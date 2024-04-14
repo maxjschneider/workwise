@@ -75,7 +75,7 @@ function DeleteButton(props) {
   }
 }
 
-function addNum(props) {
+function addNum({ user, setShow }) {
   const validNumber = new RegExp("[0-9]{10}$");
   const enteredNumber = prompt(
     "Please enter your 10 digit phone number with no spaces"
@@ -83,8 +83,19 @@ function addNum(props) {
   if (!validNumber.test(enteredNumber)) {
     alert("Invalid number! Please try again!");
   } else {
-    console.log(enteredNumber);
-    updateUser(props.user._id, { phoneNumber: enteredNumber });
+    console.log("Valid number:", enteredNumber);
+    updateUser(user._id, { phoneNumber: enteredNumber })
+      .then((result) => {
+        console.log("Update result:", result);
+        setShow({ visible: true, message: result });
+      })
+      .catch((error) => {
+        console.error("Update error:", error);
+        setShow({
+          visible: true,
+          message: "Failed to update phone number",
+        });
+      });
   }
 }
 export default function StaffDirectory() {
@@ -151,7 +162,7 @@ export default function StaffDirectory() {
 
                   <Button
                     variant="primary"
-                    onClick={() => addNum({ user: entry })}
+                    onClick={() => addNum({ user: entry, setShow: setShow })}
                     style={{
                       borderRadius: "10px",
                       padding: "3px 4px",
