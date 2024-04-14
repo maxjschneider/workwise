@@ -76,7 +76,7 @@ function DeleteButton(props) {
 }
 
 function addNum({ user, setShow }) {
-  const validNumber = new RegExp("[0-9]{10}$");
+  const validNumber = new RegExp("^[0-9]{10}$");
   const enteredNumber = prompt(
     "Please enter your 10 digit phone number with no spaces"
   );
@@ -159,7 +159,17 @@ export default function StaffDirectory() {
                 </td>
                 <td>{entry.email}</td>
                 <td>
-                  {entry.phoneNumber}
+                  {entry.phoneNumber != null ? (
+                    <>
+                      {/* make the phone number look nicee */}(
+                      {String(entry.phoneNumber).substring(0, 3)}){" "}
+                      {String(entry.phoneNumber).substring(3, 6)}-
+                      {String(entry.phoneNumber).substring(6, 10)}
+                    </>
+                  ) : (
+                    // dont display anything if no number
+                    entry.phoneNumber
+                  )}
                   {/*{entry.phoneNumber != null && ( dont include add when there is number*/}
                   <Button
                     variant="primary"
