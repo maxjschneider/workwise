@@ -98,6 +98,7 @@ function addNum({ user, setShow }) {
       });
   }
 }
+
 export default function StaffDirectory() {
   const [staffList, setStaffList] = useState([]);
   const [currentUser, setCurrentUser] = useState([]);
@@ -159,7 +160,7 @@ export default function StaffDirectory() {
                 <td>{entry.email}</td>
                 <td>
                   {entry.phoneNumber}
-
+                  {/*{entry.phoneNumber != null && ( dont include add when there is number*/}
                   <Button
                     variant="primary"
                     onClick={() => addNum({ user: entry, setShow: setShow })}
@@ -167,10 +168,13 @@ export default function StaffDirectory() {
                       borderRadius: "10px",
                       padding: "3px 4px",
                       fontSize: "10px",
+                      float: "right",
                     }}
                   >
-                    add
+                    {/*display edit if number is included*/}
+                    {entry.phoneNumber == null ? "add" : "edit"}{" "}
                   </Button>
+                  {/* )} */}
                 </td>
                 {currentUser.level === 2 ? (
                   <td>
