@@ -88,6 +88,9 @@ function addNum({ user, setShow }) {
       .then((result) => {
         console.log("Update result:", result);
         setShow({ visible: true, message: result });
+        setTimeout(() => {
+          window.location.reload();
+        }, 500); //reload after .5 second delay
       })
       .catch((error) => {
         console.error("Update error:", error);
@@ -170,7 +173,6 @@ export default function StaffDirectory() {
                     // dont display anything if no number
                     entry.phoneNumber
                   )}
-                  {/*{entry.phoneNumber != null && ( dont include add when there is number*/}
                   <Button
                     variant="primary"
                     onClick={() => addNum({ user: entry, setShow: setShow })}
@@ -184,7 +186,6 @@ export default function StaffDirectory() {
                     {/*display edit if number is included*/}
                     {entry.phoneNumber == null ? "add" : "edit"}{" "}
                   </Button>
-                  {/* )} */}
                 </td>
                 {currentUser.level === 2 ? (
                   <td>
