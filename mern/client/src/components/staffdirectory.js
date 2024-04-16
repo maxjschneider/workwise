@@ -161,32 +161,35 @@ export default function StaffDirectory() {
                   />
                 </td>
                 <td>{entry.email}</td>
-                <td>
-                  {entry.phoneNumber != null ? (
-                    <>
-                      {/* make the phone number look nicee */}(
-                      {String(entry.phoneNumber).substring(0, 3)}){" "}
-                      {String(entry.phoneNumber).substring(3, 6)}-
-                      {String(entry.phoneNumber).substring(6, 10)}
-                    </>
-                  ) : (
-                    // dont display anything if no number
-                    entry.phoneNumber
-                  )}
-                  <Button
-                    variant="primary"
-                    onClick={() => addNum({ user: entry, setShow: setShow })}
-                    style={{
-                      borderRadius: "10px",
-                      padding: "3px 4px",
-                      fontSize: "10px",
-                      float: "right",
-                    }}
-                  >
-                    {/*display edit if number is included*/}
-                    {entry.phoneNumber == null ? "add" : "edit"}{" "}
-                  </Button>
-                </td>
+
+                {currentUser.level === 2 ? (
+                  <td>
+                    {entry.phoneNumber != null ? (
+                      <>
+                        {/* make the phone number look nicee */}(
+                        {String(entry.phoneNumber).substring(0, 3)}){" "}
+                        {String(entry.phoneNumber).substring(3, 6)}-
+                        {String(entry.phoneNumber).substring(6, 10)}
+                      </>
+                    ) : (
+                      // dont display anything if no number
+                      entry.phoneNumber
+                    )}
+                    <Button
+                      variant="primary"
+                      onClick={() => addNum({ user: entry, setShow: setShow })}
+                      style={{
+                        borderRadius: "10px",
+                        padding: "3px 4px",
+                        fontSize: "10px",
+                        float: "right",
+                      }}
+                    >
+                      {/*display edit if number is included*/}
+                      {entry.phoneNumber == null ? "Add" : "Edit"}{" "}
+                    </Button>
+                  </td>
+                ) : null}
                 {currentUser.level === 2 ? (
                   <td>
                     <DeleteButton
