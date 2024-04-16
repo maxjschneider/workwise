@@ -142,7 +142,8 @@ export default function StaffDirectory() {
             <th>Last</th>
             <th>Level</th>
             <th>Email</th>
-            <th>Phone Number</th>
+
+            {currentUser.level === 2 ? <th>Phone Number</th> : null}
             {currentUser.level === 2 ? <th></th> : null}
           </tr>
         </thead>
