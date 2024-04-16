@@ -142,8 +142,7 @@ export default function StaffDirectory() {
             <th>Last</th>
             <th>Level</th>
             <th>Email</th>
-
-            {currentUser.level === 2 ? <th>Phone Number</th> : null}
+            <th>Phone Number</th>
             {currentUser.level === 2 ? <th></th> : null}
           </tr>
         </thead>
@@ -155,6 +154,8 @@ export default function StaffDirectory() {
                 <td>{entry.firstName}</td>
                 <td>{entry.lastName}</td>
                 <td>
+                  {entry.level}
+                  {/* i have no idea what the code below does */}
                   <EmployeeLevel
                     user={entry}
                     currentUser={currentUser}
@@ -162,20 +163,19 @@ export default function StaffDirectory() {
                   />
                 </td>
                 <td>{entry.email}</td>
-
-                {currentUser.level === 2 ? (
-                  <td>
-                    {entry.phoneNumber != null ? (
-                      <>
-                        {/* make the phone number look nicee */}(
-                        {String(entry.phoneNumber).substring(0, 3)}){" "}
-                        {String(entry.phoneNumber).substring(3, 6)}-
-                        {String(entry.phoneNumber).substring(6, 10)}
-                      </>
-                    ) : (
-                      // dont display anything if no number
-                      entry.phoneNumber
-                    )}
+                <td>
+                  {entry.phoneNumber != null ? (
+                    <>
+                      {/* make the phone number look nicee */}(
+                      {String(entry.phoneNumber).substring(0, 3)}){" "}
+                      {String(entry.phoneNumber).substring(3, 6)}-
+                      {String(entry.phoneNumber).substring(6, 10)}
+                    </>
+                  ) : (
+                    // dont display anything if no number
+                    entry.phoneNumber
+                  )}
+                  {currentUser.level >= 1 ? (
                     <Button
                       variant="primary"
                       onClick={() => addNum({ user: entry, setShow: setShow })}
@@ -187,10 +187,10 @@ export default function StaffDirectory() {
                       }}
                     >
                       {/*display edit if number is included*/}
-                      {entry.phoneNumber == null ? "Add" : "Edit"}{" "}
+                      {entry.phoneNumber == null ? "add" : "edit"}
                     </Button>
-                  </td>
-                ) : null}
+                  ) : null}
+                </td>
                 {currentUser.level === 2 ? (
                   <td>
                     <DeleteButton
