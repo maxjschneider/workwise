@@ -24,8 +24,9 @@ const SESS_LIFETIME = process.env.SESS_LIFETIME;
   try {
     process.argv.forEach(function (val) {
       if (val === "test") {
+        console.log("Test database configuration enabled.");
         // set uri to test db
-        ATLAS_URI;
+        ATLAS_URI = process.env.ATLAS_TEST_URI;
       }
     });
 
