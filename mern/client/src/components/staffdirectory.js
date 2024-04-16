@@ -75,6 +75,33 @@ function DeleteButton(props) {
   }
 }
 
+function addNum({ user, setShow }) {
+  const validNumber = new RegExp("^[0-9]{10}$");
+  const enteredNumber = prompt(
+    "Please enter your 10 digit phone number with no spaces"
+  );
+  if (!validNumber.test(enteredNumber)) {
+    alert("Invalid number! Please try again!");
+  } else {
+    console.log("Valid number:", enteredNumber);
+    updateUser(user._id, { phoneNumber: enteredNumber })
+      .then((result) => {
+        console.log("Update result:", result);
+        setShow({ visible: true, message: result });
+        setTimeout(() => {
+          window.location.reload();
+        }, 500); //reload after .5 second delay
+      })
+      .catch((error) => {
+        console.error("Update error:", error);
+        setShow({
+          visible: true,
+          message: "Failed to update phone number",
+        });
+      });
+  }
+}
+
 export default function StaffDirectory() {
   const [staffList, setStaffList] = useState([]);
   const [currentUser, setCurrentUser] = useState([]);
@@ -115,6 +142,7 @@ export default function StaffDirectory() {
             <th>Last</th>
             <th>Level</th>
             <th>Email</th>
+            <th>Phone Number</th>
             {currentUser.level === 2 ? <th></th> : null}
           </tr>
         </thead>
@@ -133,6 +161,32 @@ export default function StaffDirectory() {
                   />
                 </td>
                 <td>{entry.email}</td>
+                <td>
+                  {entry.phoneNumber != null ? (
+                    <>
+                      {/* make the phone number look nicee */}(
+                      {String(entry.phoneNumber).substring(0, 3)}){" "}
+                      {String(entry.phoneNumber).substring(3, 6)}-
+                      {String(entry.phoneNumber).substring(6, 10)}
+                    </>
+                  ) : (
+                    // dont display anything if no number
+                    entry.phoneNumber
+                  )}
+                  <Button
+                    variant="primary"
+                    onClick={() => addNum({ user: entry, setShow: setShow })}
+                    style={{
+                      borderRadius: "10px",
+                      padding: "3px 4px",
+                      fontSize: "10px",
+                      float: "right",
+                    }}
+                  >
+                    {/*display edit if number is included*/}
+                    {entry.phoneNumber == null ? "add" : "edit"}{" "}
+                  </Button>
+                </td>
                 {currentUser.level === 2 ? (
                   <td>
                     <DeleteButton

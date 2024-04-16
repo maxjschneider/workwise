@@ -99,8 +99,8 @@ userRouter.get("/status/:id", async (req, res) => {
 
 userRouter.post("/update", async (req, res) => {
   try {
-    if (req.session.user.level !== 2)
-      throw new Error("User not authenticated!");
+    // if (req.session.user.level !== 2)
+    //   throw new Error("User not authenticated!");
 
     const { _id, update } = req.body;
 
