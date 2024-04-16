@@ -187,7 +187,7 @@ export default function StaffDirectory() {
                       }}
                     >
                       {/*display edit if number is included*/}
-                      {entry.phoneNumber == null ? "add" : "edit"}
+                      {entry.phoneNumber == null ? "Add" : "Edit"}
                     </Button>
                   ) : null}
                 </td>
