@@ -44,6 +44,24 @@ cd mern/client
 npm start
 ```
 
+## Testing
+
+Testing can only be done locally. Automated testing is only performed on the backend. For frontend testing, see the wiki pages.
+
+To run the test suite, first start the server in test mode:
+
+```
+cd mern/server
+npm start test
+```
+
+Then, in a seperate terminal, run the tests:
+
+```
+cd mern/server
+npm test
+```
+
 ## Formatting
 
 This repository is formatted with Prettier.
