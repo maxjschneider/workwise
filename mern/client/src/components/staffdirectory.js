@@ -140,10 +140,9 @@ export default function StaffDirectory() {
             <th>Position</th>
             <th>First</th>
             <th>Last</th>
-            <th>Level</th>
+            {currentUser.level === 2 ? <th>Level</th> : null}
             <th>Email</th>
             <th>Phone Number</th>
-            {currentUser.level === 2 ? <th></th> : null}
           </tr>
         </thead>
         <tbody>
@@ -153,15 +152,16 @@ export default function StaffDirectory() {
                 <td>{entry.position}</td>
                 <td>{entry.firstName}</td>
                 <td>{entry.lastName}</td>
-                <td>
-                  {entry.level}
-                  {/* i have no idea what the code below does */}
-                  <EmployeeLevel
-                    user={entry}
-                    currentUser={currentUser}
-                    setShow={setShow}
-                  />
-                </td>
+                {currentUser.level === 2 ? (
+                  <td>
+                    {/* i have no idea what the code below does */}
+                    <EmployeeLevel
+                      user={entry}
+                      currentUser={currentUser}
+                      setShow={setShow}
+                    />
+                  </td>
+                ) : null}
                 <td>{entry.email}</td>
                 <td>
                   {entry.phoneNumber != null ? (
