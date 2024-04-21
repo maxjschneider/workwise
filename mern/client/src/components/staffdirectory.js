@@ -90,7 +90,7 @@ function addNum({ user, setShow }) {
         setShow({ visible: true, message: result });
         setTimeout(() => {
           window.location.reload();
-        }, 500); //reload after .5 second delay
+        }, 1000); //reload after 1 second delay
       })
       .catch((error) => {
         console.error("Update error:", error);
