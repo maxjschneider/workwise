@@ -1,5 +1,9 @@
 # WorkWise
 
+## Product Demo
+
+Check out our live deployment of [WorkWise](https://workwise-frontend.onrender.com/)! This deployment is running on a free tier, so it may take a minute or so for the page to load. The web page goes dormant if it hasn't been opened recently; it takes time to spin up.
+
 ## Product Vision
 
 WorkWise seeks to provide an all-encompassing software solution to workplace management. We aim to be the go-to platform for any business seeking a comprehensive, user-friendly, and efficient tool to manage their workplace.
@@ -42,6 +46,24 @@ Start Frontend:
 ```
 cd mern/client
 npm start
+```
+
+## Testing
+
+Testing can only be done locally. Automated testing is only performed on the backend. For frontend testing, see the wiki pages.
+
+To run the test suite, first start the server in test mode:
+
+```
+cd mern/server
+npm start test
+```
+
+Then, in a seperate terminal, run the tests:
+
+```
+cd mern/server
+npm test
 ```
 
 ## Formatting

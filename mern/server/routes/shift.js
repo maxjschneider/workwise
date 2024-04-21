@@ -78,8 +78,8 @@ timeclockRouter.get("/day/:day", async (req, res) => {
 timeclockRouter.get("/unapproved", async (req, res) => {
   try {
     // if (req.session.user.level < 1) {
-    // throw new Error("Unauthorized request.");
-    //}
+    //  throw new Error("Unauthorized request.");
+    // }
 
     const response = await ShiftEntry.find({
       approved: false,

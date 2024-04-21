@@ -14,7 +14,7 @@ import {
 
 import "./loadEnvironment.mjs";
 
-const ATLAS_URI = process.env.ATLAS_URI;
+var ATLAS_URI = process.env.ATLAS_URI;
 const PORT = process.env.PORT;
 const SESS_NAME = process.env.SESS_NAME;
 const SESS_SECRET = process.env.SESS_SECRET;
@@ -22,6 +22,14 @@ const SESS_LIFETIME = process.env.SESS_LIFETIME;
 
 (async () => {
   try {
+    process.argv.forEach(function (val) {
+      if (val === "test") {
+        console.log("Test database configuration enabled.");
+        // set uri to test db
+        ATLAS_URI = process.env.ATLAS_TEST_URI;
+      }
+    });
+
     await mongoose.connect(ATLAS_URI, { useNewUrlParser: true });
     console.log("MongoDB Atlas connected");
 

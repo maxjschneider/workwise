@@ -75,6 +75,33 @@ function DeleteButton(props) {
   }
 }
 
+function addNum({ user, setShow }) {
+  const validNumber = new RegExp("^[0-9]{10}$");
+  const enteredNumber = prompt(
+    "Please enter your 10 digit phone number with no spaces"
+  );
+  if (!validNumber.test(enteredNumber)) {
+    alert("Invalid number! Please try again!");
+  } else {
+    console.log("Valid number:", enteredNumber);
+    updateUser(user._id, { phoneNumber: enteredNumber })
+      .then((result) => {
+        console.log("Update result:", result);
+        setShow({ visible: true, message: result });
+        setTimeout(() => {
+          window.location.reload();
+        }, 500); //reload after .5 second delay
+      })
+      .catch((error) => {
+        console.error("Update error:", error);
+        setShow({
+          visible: true,
+          message: "Failed to update phone number",
+        });
+      });
+  }
+}
+
 export default function StaffDirectory() {
   const [staffList, setStaffList] = useState([]);
   const [currentUser, setCurrentUser] = useState([]);
@@ -113,9 +140,9 @@ export default function StaffDirectory() {
             <th>Position</th>
             <th>First</th>
             <th>Last</th>
-            <th>Level</th>
+            {currentUser.level === 2 ? <th>Level</th> : null}
             <th>Email</th>
-            {currentUser.level === 2 ? <th></th> : null}
+            <th>Phone Number</th>
           </tr>
         </thead>
         <tbody>
@@ -125,14 +152,45 @@ export default function StaffDirectory() {
                 <td>{entry.position}</td>
                 <td>{entry.firstName}</td>
                 <td>{entry.lastName}</td>
-                <td>
-                  <EmployeeLevel
-                    user={entry}
-                    currentUser={currentUser}
-                    setShow={setShow}
-                  />
-                </td>
+                {currentUser.level === 2 ? (
+                  <td>
+                    {/* i have no idea what the code below does */}
+                    <EmployeeLevel
+                      user={entry}
+                      currentUser={currentUser}
+                      setShow={setShow}
+                    />
+                  </td>
+                ) : null}
                 <td>{entry.email}</td>
+                <td>
+                  {entry.phoneNumber != null ? (
+                    <>
+                      {/* make the phone number look nicee */}(
+                      {String(entry.phoneNumber).substring(0, 3)}){" "}
+                      {String(entry.phoneNumber).substring(3, 6)}-
+                      {String(entry.phoneNumber).substring(6, 10)}
+                    </>
+                  ) : (
+                    // dont display anything if no number
+                    entry.phoneNumber
+                  )}
+                  {currentUser.level >= 1 ? (
+                    <Button
+                      variant="primary"
+                      onClick={() => addNum({ user: entry, setShow: setShow })}
+                      style={{
+                        borderRadius: "10px",
+                        padding: "3px 4px",
+                        fontSize: "10px",
+                        float: "right",
+                      }}
+                    >
+                      {/*display edit if number is included*/}
+                      {entry.phoneNumber == null ? "Add" : "Edit"}
+                    </Button>
+                  ) : null}
+                </td>
                 {currentUser.level === 2 ? (
                   <td>
                     <DeleteButton
