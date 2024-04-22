@@ -50,7 +50,12 @@ npm start
 
 ## Testing
 
-Testing can only be done locally. Automated testing is only performed on the backend. For frontend testing, see the wiki pages.
+**Frontend Testing**
+The frontend is tested through manual test scripts. These scripts are located in the [Wiki section](https://code.vt.edu/cs-3704-null/scheduler/-/wikis/home) of this repository. All of the test scripts we wrote are present in the sidebar located on the right side of the main Wiki page. Each script contains a series of steps and assertions to test the various frontend components.
+
+
+**Backend Testing**
+The backend tests are performed automatically. Automated testing can only be done locally.
 
 To run the test suite, first start the server in test mode:
 
