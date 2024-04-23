@@ -89,8 +89,8 @@ function addNum({ user, setShow }) {
         console.log("Update result:", result);
         setShow({ visible: true, message: result });
         setTimeout(() => {
-          window.location.reload();
-        }, 1000); //reload after 1 second delay
+          setShow({ visible: false, message: result });
+        }, 2000); //reload after 2 second delay
       })
       .catch((error) => {
         console.error("Update error:", error);
@@ -110,6 +110,11 @@ export default function StaffDirectory() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const handleAddNum = ({ user, setShow }) => {
+    addNum({ user, setShow });
+    fetchData();
+  };
 
   async function fetchData() {
     const currentUser = await getUser();
@@ -178,7 +183,9 @@ export default function StaffDirectory() {
                   {currentUser.level >= 1 ? (
                     <Button
                       variant="primary"
-                      onClick={() => addNum({ user: entry, setShow: setShow })}
+                      onClick={() =>
+                        handleAddNum({ user: entry, setShow: setShow })
+                      }
                       style={{
                         borderRadius: "10px",
                         padding: "3px 4px",
