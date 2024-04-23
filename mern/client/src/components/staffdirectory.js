@@ -191,6 +191,8 @@ export default function StaffDirectory() {
                         padding: "3px 4px",
                         fontSize: "10px",
                         float: "right",
+                        height: "30px",
+                        width: "40px",
                       }}
                     >
                       {/*display edit if number is included*/}
