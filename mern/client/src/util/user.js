@@ -60,6 +60,22 @@ export const getUser = async () => {
   return user;
 };
 
+export const getUsers = async () => {
+
+  const response = await fetch(
+    process.env.REACT_APP_HOSTNAME + "/api/users/",
+    {
+      method: "GET",
+      headers: headers,
+      credentials: "include",
+    }
+  );
+
+  const user = await response.json();
+
+  return user;
+};
+
 // hours, isclockedin, and shifts
 export const getUserStatus = async () => {
   const user_id = window.getState().session.userId;
@@ -126,4 +142,20 @@ export const updateUser = async (_id, update) => {
   const result = await response.json();
 
   return result;
+};
+
+export const deleteUserFromAll = async (_id) => {
+  const response = await fetch(
+    process.env.REACT_APP_HOSTNAME + "/api/users/deleteUser",
+    {
+      method: "POST",
+      body: JSON.stringify({ _id: _id}),
+      headers: headers,
+      credentials: "include",
+    }
+  );
+
+  const status = await response.json();
+
+  return status;
 };

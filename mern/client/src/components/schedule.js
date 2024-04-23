@@ -12,6 +12,7 @@ import ShiftEditor from "./utils/shiftByName";
 
 import { createScheduleEntry, updateUserScheduleEntry, getUser } from "../util/user";
 import { getTime, getMilitaryTime } from "../util/timeConvert";
+import { getAllUsers} from "../util/manager";
 
 // TODO: questionable, fix later, pushed to git so repo knows puesdo user.
 const NULL_USER_ID = "6610a1894e824c674f940867";
@@ -119,22 +120,33 @@ function EditButton(props) {
 
 function PostRoleButton(props) {
   const [show, setShow] = useState(false);
+  const [users, setUsers] = useState([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const fetchUsers = async () => {
+    const res = await getAllUsers();
+    setUsers(res);
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     var day = e.target[0].value;
-    var start = new Date("01/01/1970 " + e.target[1].value);
-    var end = new Date("01/01/1970 " + e.target[2].value);
+    var user = e.target[1].value;
+    var start = new Date("01/01/1970 " + e.target[2].value);
+    var end = new Date("01/01/1970 " + e.target[3].value);
 
     start.setHours(start.getHours() - 5);
     end.setHours(end.getHours() - 5);
 
     if (start !== "Invalid date" && end !== "Invalid date") {
-      createScheduleEntry(NULL_USER_ID, day, start, end, true);
+      createScheduleEntry(user === "" ? NULL_USER_ID : user, day, start, end, true);
     }
     handleClose();
     props.fetchData();
@@ -171,6 +183,26 @@ function PostRoleButton(props) {
               </Form.Select>
             </Form.Group>
 
+            <Form.Group className="mb-3" controlId="employee">
+              <Form.Label>Employee</Form.Label>
+              <Form.Select
+                style={{ width: "50%", marginBottom: "25px" }}
+                defaultValue=""
+              >
+                <option value="" >
+                  None
+                </option>
+
+                {users.map((user) => {
+                  return (
+                    <option key={user._id} value={user._id}>
+                      {user.firstName + " " + user.lastName}
+                    </option>
+                  );
+                })}
+              </Form.Select>
+
+            </Form.Group>
             <Row xs={4}>
               <Form.Group as={Col} controlId="startTimeHours">
                 <Form.Label>Start Time</Form.Label>

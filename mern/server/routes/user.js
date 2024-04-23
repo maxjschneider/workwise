@@ -1,6 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import User from "../models/user.js";
+import Announcement from "../models/announcement.js";
+import ScheduleEntry from "../models/schedule.js";
 import Shift from "../models/shift.js";
 import Joi from "joi";
 import { parseError, sessionizeUser } from "../util/helpers.js";
@@ -114,6 +116,21 @@ userRouter.post("/update", async (req, res) => {
     await user.updateOne(update);
 
     res.send(JSON.stringify("User successfully updated!"));
+  } catch (err) {
+    res.status(400).send(parseError(err.message));
+  }
+});
+
+userRouter.post("/deleteUser", async (req, res) => {
+  try {
+    const { _id } = req.body;
+
+    await Announcement.deleteMany({ user_id: _id });
+    await ScheduleEntry.deleteMany({ user_id: _id });
+    await Shift.deleteMany({ user_id: _id });
+    await User.deleteOne({ _id: _id });
+
+    res.send(JSON.stringify("User deleted.")).status(200);
   } catch (err) {
     res.status(400).send(parseError(err.message));
   }
