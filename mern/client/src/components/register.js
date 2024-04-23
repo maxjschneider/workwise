@@ -5,6 +5,7 @@ import { register } from "../actions/session.js";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Col";
+import { useNavigate } from "react-router-dom";
 
 const mapStateToProps = ({ errors }) => ({
   errors,
@@ -15,6 +16,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const Register = ({ errors, register }) => {
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -27,7 +30,11 @@ const Register = ({ errors, register }) => {
       password: e.target[3].value,
     };
 
-    register(user);
+    register(user).then((res) => {
+      if (res.type === "RECEIVE_CURRENT_USER") {
+        navigate("/");
+      }
+    });
   };
 
   return (

@@ -37,7 +37,7 @@ const SESS_LIFETIME = process.env.SESS_LIFETIME;
 
     app.use(
       cors({
-        origin: "https://workwise-frontend.onrender.com",
+        origin: "http://localhost:3000",
         credentials: true,
       })
     );

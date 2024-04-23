@@ -55,7 +55,10 @@ const SiteNav = ({ loggedIn, logout }) => {
             </Nav>
 
             <Nav className="ms-auto fw-bold ">
-              <Button variant="primary" onClick={logout}>
+              <Button
+                variant="primary"
+                onClick={() => window.location.reload()}
+              >
                 Logout
               </Button>
             </Nav>

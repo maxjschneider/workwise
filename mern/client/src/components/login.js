@@ -5,6 +5,7 @@ import { login } from "../actions/session";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
+import { useNavigate } from "react-router-dom";
 
 const mapStateToProps = ({ errors }) => ({
   errors,
@@ -14,7 +15,11 @@ const mapDispatchToProps = (dispatch) => ({
   login: (user) => dispatch(login(user)),
 });
 
-const Login = ({ errors, login }) => {
+const Login = (props) => {
+  const errors = props.errors;
+  const login = props.login;
+  let navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const user = {
@@ -22,7 +27,11 @@ const Login = ({ errors, login }) => {
       password: e.target[1].value,
     };
 
-    login(user);
+    login(user).then((res) => {
+      if (res.type === "RECEIVE_CURRENT_USER") {
+        navigate("/");
+      }
+    });
   };
 
   return (

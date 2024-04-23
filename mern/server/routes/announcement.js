@@ -6,7 +6,6 @@ const annoucementRouter = express.Router();
 
 annoucementRouter.get("/", async (req, res) => {
   const response = await Announcement.find();
-  console.log(response);
 
   var result = [];
 
