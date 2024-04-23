@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "react-bootstrap";
-import { getUser } from "../util/user";
+import { deleteUserFromAll, getUser } from "../util/user";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
@@ -60,6 +60,10 @@ function DeleteButton(props) {
     e.preventDefault();
 
     // TODO: DELETE THE USER
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      deleteUserFromAll(props.user._id);
+      props.fetchData();
+    }
   };
 
   if (props.currentUser.level === 2) {
@@ -139,6 +143,7 @@ export default function StaffDirectory() {
                       user={entry}
                       currentUser={currentUser}
                       setShow={setShow}
+                      fetchData={fetchData}
                     />
                   </td>
                 ) : null}

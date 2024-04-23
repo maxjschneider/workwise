@@ -143,3 +143,19 @@ export const updateUser = async (_id, update) => {
 
   return result;
 };
+
+export const deleteUserFromAll = async (_id) => {
+  const response = await fetch(
+    process.env.REACT_APP_HOSTNAME + "/api/users/deleteUser",
+    {
+      method: "POST",
+      body: JSON.stringify({ _id: _id}),
+      headers: headers,
+      credentials: "include",
+    }
+  );
+
+  const status = await response.json();
+
+  return status;
+};
