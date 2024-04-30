@@ -62,4 +62,16 @@ scheduleRouter.post("/update", async (req, res) => {
   }
 });
 
+scheduleRouter.post("/delete", async (req, res) => {
+  try {
+    const { _id } = req.body;
+
+    await ScheduleEntry.deleteOne({ _id: _id });
+
+    res.send(JSON.stringify("Schedule entry deleted"));
+  } catch (err) {
+    res.status(400).send(parseError(err.message));
+  }
+});
+
 export default scheduleRouter;

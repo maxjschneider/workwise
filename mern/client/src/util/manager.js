@@ -73,3 +73,19 @@ export const updateUserShiftEntry = async (_id, update) => {
 
   return status;
 };
+
+export const deleteScheduleEntry = async (_id) => {
+  const response = await fetch(
+    process.env.REACT_APP_HOSTNAME + "/api/schedule/delete",
+    {
+      method: "POST",
+      body: JSON.stringify({ _id: _id }),
+      headers: headers,
+      credentials: "include",
+    }
+  );
+
+  const status = await response.json();
+
+  return status;
+};

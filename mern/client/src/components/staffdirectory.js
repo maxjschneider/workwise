@@ -61,8 +61,9 @@ function DeleteButton(props) {
 
     // TODO: DELETE THE USER
     if (window.confirm("Are you sure you want to delete this user?")) {
-      deleteUserFromAll(props.user._id);
-      props.fetchData();
+      deleteUserFromAll(props.user._id).then(() => {
+        props.fetchData();
+      });
     }
   };
 
@@ -146,7 +147,10 @@ export default function StaffDirectory() {
       <Table striped bordered>
         <thead>
           <tr className="black-row">
-            <th>Position</th>
+            {
+              //<th>Position</th>
+            }
+
             <th>First</th>
             <th>Last</th>
             {currentUser.level === 2 ? <th>Level</th> : null}
@@ -158,7 +162,9 @@ export default function StaffDirectory() {
           {staffList.map((entry) => {
             return (
               <tr key={entry._id}>
-                <td>{entry.position}</td>
+                {
+                  //<td>{entry.position}</td>
+                }
                 <td>{entry.firstName}</td>
                 <td>{entry.lastName}</td>
                 {currentUser.level === 2 ? (

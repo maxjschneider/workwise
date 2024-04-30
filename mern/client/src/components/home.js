@@ -21,7 +21,7 @@ const HomePage = () => {
     let mm = date.getMonth() + 1; // Months start at 0!
     let dd = date.getDate();
 
-    return dd + "/" + mm + "/" + yyyy;
+    return mm + "/" + dd + "/" + yyyy;
   };
 
   const handlePostSubmit = async (e) => {
