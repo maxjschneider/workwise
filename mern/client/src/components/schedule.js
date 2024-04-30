@@ -10,9 +10,13 @@ import Col from "react-bootstrap/Col";
 import ShiftApprovalList from "./utils/shiftapprovallist";
 import ShiftEditor from "./utils/shiftByName";
 
-import { createScheduleEntry, updateUserScheduleEntry, getUser } from "../util/user";
+import {
+  createScheduleEntry,
+  updateUserScheduleEntry,
+  getUser,
+} from "../util/user";
 import { getTime, getMilitaryTime } from "../util/timeConvert";
-import { getAllUsers} from "../util/manager";
+import { deleteScheduleEntry, getAllUsers } from "../util/manager";
 
 // TODO: questionable, fix later, pushed to git so repo knows puesdo user.
 const NULL_USER_ID = "6610a1894e824c674f940867";
@@ -146,19 +150,26 @@ function PostRoleButton(props) {
     end.setHours(end.getHours() - 5);
 
     if (start !== "Invalid date" && end !== "Invalid date") {
-      createScheduleEntry(user === "" ? NULL_USER_ID : user, day, start, end, true);
+      createScheduleEntry(
+        user === "" ? NULL_USER_ID : user,
+        day,
+        start,
+        end,
+        true
+      );
     }
     handleClose();
     props.fetchData();
-
   };
   return (
     <div>
-      <Button variant="primary"
+      <Button
+        variant="primary"
         onClick={handleShow}
         style={{
           fontSize: "20px",
-        }}>
+        }}
+      >
         Post
       </Button>
 
@@ -189,9 +200,7 @@ function PostRoleButton(props) {
                 style={{ width: "50%", marginBottom: "25px" }}
                 defaultValue=""
               >
-                <option value="" >
-                  None
-                </option>
+                <option value="">None</option>
 
                 {users.map((user) => {
                   return (
@@ -201,23 +210,16 @@ function PostRoleButton(props) {
                   );
                 })}
               </Form.Select>
-
             </Form.Group>
             <Row xs={4}>
               <Form.Group as={Col} controlId="startTimeHours">
                 <Form.Label>Start Time</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder={"0:00"}
-                />
+                <Form.Control type="text" placeholder={"0:00"} />
               </Form.Group>
 
               <Form.Group as={Col} controlId="startTimeMinutes">
                 <Form.Label>End Time</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder={"0:00"}
-                />
+                <Form.Control type="text" placeholder={"0:00"} />
               </Form.Group>
             </Row>
 
@@ -237,11 +239,11 @@ function PostRoleButton(props) {
           </Form>
         </Modal.Body>
       </Modal>
-    </div>)
+    </div>
+  );
 }
 
 function AcceptShiftButton(props) {
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const id = await getUser();
@@ -250,62 +252,90 @@ function AcceptShiftButton(props) {
   };
 
   return (
-    <Button variant="primary"
+    <Button
+      variant="primary"
       onClick={handleSubmit}
       style={{
         borderRadius: "8px",
         fontSize: "12px",
         padding: "4px 8px",
-      }}>
+      }}
+    >
       Sign Up
     </Button>
   );
 }
 
-const ScheduleColumn = (props) => (
-  <td>
-    <table>
-      <tbody>
-        {props.entry.map((entry) => (
-          <tr key={entry._id}>
-            <td>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-start",
-                }}
-              >
-                {/* Left side of the container */}
-                <div>
+const ScheduleColumn = (props) => {
+  const handleSubmit = (id) => {
+    deleteScheduleEntry(id).then(() => {
+      props.fetchData();
+    });
+  };
+
+  return (
+    <td>
+      <table>
+        <tbody>
+          {props.entry.map((entry) => (
+            <tr key={entry._id}>
+              <td>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                  }}
+                >
+                  {/* Left side of the container */}
+                  <div>
                     {entry.user_id.toString() === NULL_USER_ID ? (
-                    <>
-                      <h6 style={{ fontSize: 15, margin: 0 }}>
-                        {"Open Shift:"}
-                        <br />
-                      </h6>
-                      {getTime(entry.start)} - {getTime(entry.end)}
-                      <AcceptShiftButton _id={entry._id} fetchData={props.fetchData}/>
-                    </>
-                    ): 
-                    <>
-                      <h6 style={{ fontSize: 15, margin: 0 }}>
-                        {entry.firstName + " " + entry.lastName}
-                        <br /> (<i>{entry.position}</i>) <br />
-                      </h6>
-                      {getTime(entry.start)} - {getTime(entry.end)}
-                    </>}
+                      <>
+                        <h6 style={{ fontSize: 15, margin: 0 }}>
+                          {"Open Shift:"}
+                          <br />
+                        </h6>
+                        {getTime(entry.start)} - {getTime(entry.end)}
+                        <AcceptShiftButton
+                          _id={entry._id}
+                          fetchData={props.fetchData}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <h6 style={{ fontSize: 15, margin: 0 }}>
+                          {entry.firstName + " " + entry.lastName}
+                          {
+                            //<br /> (<i>{entry.position}</i>) <br />
+                          }
+                        </h6>
+                        {getTime(entry.start)} - {getTime(entry.end)}
+                      </>
+                    )}
+                  </div>
+                  {/* Right side of the container */}
+                  <EditButton entry={entry} fetchData={props.fetchData} />
+                  <Button
+                    variant="danger"
+                    onClick={() => handleSubmit(entry._id)}
+                    style={{
+                      borderRadius: "10px",
+                      padding: "3px 4px",
+                      fontSize: "10px",
+                      marginLeft: "1px",
+                    }}
+                  >
+                    Delete
+                  </Button>
                 </div>
-                {/* Right side of the container */}
-                <EditButton entry={entry} fetchData={props.fetchData}/>
-              </div>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </td>
-);
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </td>
+  );
+};
 
 export default function Schedule() {
   const [schedule, setSchedule] = useState([]);
@@ -346,15 +376,17 @@ export default function Schedule() {
 
   return (
     <div className="container-xxl">
-      <div style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <h1>Weekly Calendar</h1>
         {window.getState().session.level >= 1 ? (
           <>
-            <PostRoleButton fetchData={fetchData}/>
+            <PostRoleButton fetchData={fetchData} />
           </>
         ) : null}
       </div>
@@ -392,7 +424,9 @@ export default function Schedule() {
         <tbody>
           <tr>
             {schedule.map((entry, i) => {
-              return <ScheduleColumn key={i} entry={entry} fetchData={fetchData}/>;
+              return (
+                <ScheduleColumn key={i} entry={entry} fetchData={fetchData} />
+              );
             })}
           </tr>
         </tbody>
