@@ -314,19 +314,23 @@ const ScheduleColumn = (props) => {
                     )}
                   </div>
                   {/* Right side of the container */}
-                  <EditButton entry={entry} fetchData={props.fetchData} />
-                  <Button
-                    variant="danger"
-                    onClick={() => handleSubmit(entry._id)}
-                    style={{
-                      borderRadius: "10px",
-                      padding: "3px 4px",
-                      fontSize: "10px",
-                      marginLeft: "1px",
-                    }}
-                  >
-                    Delete
-                  </Button>
+                  {window.getState().session.level >= 1 ? (
+                    <div>
+                      <EditButton entry={entry} fetchData={props.fetchData} />
+                      <Button
+                        variant="danger"
+                        onClick={() => handleSubmit(entry._id)}
+                        style={{
+                          borderRadius: "10px",
+                          padding: "3px 4px",
+                          fontSize: "10px",
+                          marginLeft: "1px",
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  ) : null}
                 </div>
               </td>
             </tr>
